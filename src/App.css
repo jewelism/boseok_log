@@ -4,22 +4,6 @@
   height: 98vh;
 }
 
-.app-menuWrapper {
-  width: 20%;
-  height: 100%;
-  /* background-color: black; */
-}
-
-.app-menu-top-title {
-  display: flex;
-  justify-content: center;
-  font-size: 25px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  color: #272727;
-  /* background-color: black; */
-}
-
 .app-container {
   width: 80%;
   height: 100%;
@@ -30,4 +14,18 @@
 .app-container-top-title {
   display: flex;
   justify-content: center;
+}
+
+.app-menuWrapper {
+  width: 20%;
+  height: 100%;
+}
+
+.app-menu-top-title {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  color: #272727;
 }
