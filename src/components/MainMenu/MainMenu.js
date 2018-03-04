@@ -10,66 +10,53 @@ import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
 
 class MainMenu extends React.Component {
-
-  state = {
-    open: false,
-  };
-
-  handleNestedListToggle = (item) => {
-    this.setState({
-      open: item.state.open,
-    });
-  };
-
+  
   handleOnClick = (path) => {
     this.props.history.push(`/${path}`)
   }
 
   render() {
-    const MenuItems = ['about', 'company', 'kim', 'jung']
+    const MenuItems = [
+      { id: 'About', icon: <ContentSend /> },
+      { id: 'company', icon: <ContentSend /> },
+      { id: 'kim', icon: <ContentSend /> },
+      { id: 'jung', icon: <ContentSend /> }
+    ]
+    const TechItems = [
+      { id: 'React.js', icon: <ActionGrade /> },
+      { id: 'Cloud Server', icon: <ContentDrafts /> }
+    ]
     return (
-        <MuiThemeProvider>
-          <List>
-            {MenuItems.map((item, index)=>{
-              return(
-                <ListItem primaryText={item} leftIcon={<ContentSend />} onClick={()=>this.handleOnClick(item)} key={index}/>
-              )
-            })}
-            <ListItem
-              primaryText="Inbox Sample"
-              leftIcon={<ContentInbox />}
-              // initiallyOpen={false}
-              primaryTogglesNestedList={true}
-              nestedItems={[
-                <ListItem
-                  key={1}
-                  primaryText="Starred"
-                  leftIcon={<ActionGrade />}
-                />,
-                <ListItem
-                  key={2}
-                  primaryText="Sent Mail"
-                  leftIcon={<ContentSend />}
-                  disabled={true}
-                  nestedItems={[
-                    <ListItem key={1} primaryText="Drafts" leftIcon={<ContentDrafts />} />,
-                  ]}
-                />,
-                <ListItem
-                  key={3}
-                  primaryText="Inbox"
-                  leftIcon={<ContentInbox />}
-                  open={this.state.open}
-                  onNestedListToggle={this.handleNestedListToggle}
-                  nestedItems={[
-                    <ListItem key={1} primaryText="Drafts" leftIcon={<ContentDrafts />} />,
-                  ]}
-                />,
-              ]}
-            />
-          </List>
+      <MuiThemeProvider>
+        <List>
+          {MenuItems.map((item, index) => {
+            return (
+              <ListItem
+                primaryText={item.id} leftIcon={item.icon}
+                onClick={() => this.handleOnClick(item.id)} key={index} />
+            )
+          })}
+          <ListItem
+            primaryText="Tech Log"
+            leftIcon={<ContentInbox />}
+            initiallyOpen={true}
+            primaryTogglesNestedList={true}
+            nestedItems={
+              TechItems.map((item, index) => {
+                index = index + MenuItems.length
+                return (
+                  <ListItem
+                    key={index}
+                    primaryText={item.id}
+                    leftIcon={item.icon}
+                  />
+                )
+              })
+            }
+          />
+        </List>
 
-        </MuiThemeProvider>
+      </MuiThemeProvider>
     );
   }
 }
