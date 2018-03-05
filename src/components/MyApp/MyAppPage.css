@@ -1,0 +1,18 @@
+.my-app-page-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.my-app-page-item-wrapper {
+  /* margin-top: 15px; */
+  margin-bottom: 20px;
+  font-size: 20px;
+  /* align-self: flex-start; */
+}
+
+.my-app-page-item {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}

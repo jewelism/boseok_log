@@ -3,12 +3,12 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { List, ListItem } from 'material-ui/List';
 
-import { MenuItems } from '../../constants'
+import { MENU_ITEMS } from '../../constants'
 
 class MainMenu extends React.Component {
 
   handleOnClick = (path) => {
-    this.props.history.push(`/${path}`)
+    this.props.history.push(`${path}`)
   }
 
   menuItem = ({ index, item }) => {
@@ -25,7 +25,7 @@ class MainMenu extends React.Component {
   render() {
     return (
       <List>
-        {MenuItems.map((item, index) => {
+        {MENU_ITEMS.map((item, index) => {
           if (item.nestedItems) {
             return (
               <ListItem
@@ -33,10 +33,10 @@ class MainMenu extends React.Component {
                 primaryText={item.name}
                 leftIcon={item.icon}
                 initiallyOpen={true}
-                primaryTogglesNestedList={true}
+                // primaryTogglesNestedList={true}
                 nestedItems={
                   item.nestedItems.map((innerItem, i) => {
-                    i += MenuItems.length
+                    i += MENU_ITEMS.length
                     return this.menuItem({ index: i, item: innerItem })
                   })
                 }

@@ -4,10 +4,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { routes, RouteWithSubRoutes } from './routes'
 import MainMenu from './components/MainMenu/MainMenu'
-import AboutPage from './components/About/AboutPage'
-import TechPage from './components/Blog/Tech'
-import TechListPage from './components/Blog/Tech/TechListPage'
 import './App.css';
 
 const NotFoundPage = ({ location }) => {
@@ -34,9 +32,7 @@ class App extends Component {
               </Paper>
               <Paper zDepth={5} style={{ padding: '10px' }}>
                 <Switch>
-                  <Route exact path="/about" component={AboutPage} />
-                  <Route path="/tech" component={TechPage} />
-                  <Route path="/tech/:uri" component={TechListPage} />
+                  {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
                   <Route component={NotFoundPage} />
                 </Switch>
               </Paper>

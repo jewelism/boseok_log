@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ProgressBar from '../Common/ProgressBar'
-import { skills } from '../../constants'
+import { SKILLS } from '../../constants'
 import './AboutPage.css'
 
 function About() {
@@ -27,7 +27,7 @@ function About() {
       </div>
       <div className="about-graph-wrapper">
         <span className="about-subtitle">Skills</span>
-        {skills.map((s, index) => {
+        {SKILLS.map((s, index) => {
           return (
             <div className="about-graph-item" key={index}>
               <span className="about-skill-name">{s.name}</span>
