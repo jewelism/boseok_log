@@ -1,0 +1,17 @@
+.alp-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.alp-table {
+  margin-top: 30px;
+}
+
+.alp-title {
+  display: flex;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  padding-left: 45px;
+}

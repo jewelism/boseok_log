@@ -1,22 +1,43 @@
 import React from 'react';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
-import ContentSend from 'material-ui/svg-icons/content/send';
+
+import WatchLater from 'material-ui/svg-icons/action/watch-later';
+import PersonPin from 'material-ui/svg-icons/maps/person-pin';
+import GetApp from 'material-ui/svg-icons/action/get-app';
+import Book from 'material-ui/svg-icons/action/book';
+import Code from 'material-ui/svg-icons/action/code';
+import Cloud from 'material-ui/svg-icons/file/cloud';
+import Mac from 'material-ui/svg-icons/hardware/desktop-mac';
+import LibraryBooks from 'material-ui/svg-icons/av/library-books';
+import SpeakerNotes from 'material-ui/svg-icons/action/speaker-notes';
+
+export const KNOWLEDGE = 'knowledge'
+export const TALK = 'talk'
 
 export const JS = 'js'
 export const REACT = 'react'
 export const CLOUD = 'cloud'
 export const MAC = 'mac'
+
 export const TECH_PREFIX = '/tech'
 export const JS_URI = `${TECH_PREFIX}/${JS}`
 export const REACT_URI = `${TECH_PREFIX}/${REACT}`
 export const CLOUD_URI = `${TECH_PREFIX}/${CLOUD}`
 export const MAC_URI = `${TECH_PREFIX}/${MAC}`
+
+export const NAMES = {
+  [JS]: 'Javascript',
+  [REACT]: 'React.js',
+  [CLOUD]: 'Cloud Server',
+  [MAC]: 'Mac OS',
+  [KNOWLEDGE]: 'Knowledge',
+  [TALK]: '심심해서 쓰는 글',
+}
+
 export const TECH_ITEMS = [
-  { id: JS, uri: JS_URI, name: 'Javascript', icon: <ActionGrade /> },
-  { id: REACT, uri: REACT_URI, name: 'React.js', icon: <ActionGrade /> },
-  { id: CLOUD, uri: CLOUD_URI, name: 'Cloud Server', icon: <ContentDrafts /> },
-  { id: MAC, uri: MAC_URI, name: 'Mac OS', icon: <ContentDrafts /> },
+  { id: JS, uri: JS_URI, name: NAMES[JS], icon: <Code /> },
+  { id: REACT, uri: REACT_URI, name: NAMES[REACT], icon: <Code /> },
+  { id: CLOUD, uri: CLOUD_URI, name: NAMES[CLOUD], icon: <Cloud /> },
+  { id: MAC, uri: MAC_URI, name: NAMES[MAC], icon: <Mac /> },
 ]
 
 export const LATEST_URI = '/'
@@ -24,12 +45,14 @@ export const ABOUT_URI = '/about'
 export const MYAPPS_URI = '/myapps'
 export const HIGHLIGHT_URI = `${TECH_PREFIX}/highlight`
 export const KNOWLEDGE_URI = '/knowledge'
+export const TALK_URI = '/talk'
 export const MENU_ITEMS = [
-  { uri: LATEST_URI, name: 'Latest', icon: <ContentSend /> },
-  { uri: ABOUT_URI, name: 'About', icon: <ContentSend /> },
-  { uri: MYAPPS_URI, name: 'My Applications', icon: <ContentSend /> },
-  { uri: HIGHLIGHT_URI, name: 'Tech Log', icon: <ContentSend />, nestedItems: TECH_ITEMS },
-  { uri: KNOWLEDGE_URI, name: 'Knowledge', icon: <ContentSend /> },
+  { uri: LATEST_URI, name: '최근 게시물', icon: <WatchLater /> },
+  { uri: ABOUT_URI, name: 'About Boseok', icon: <PersonPin /> },
+  { uri: MYAPPS_URI, name: 'Boseok Applications', icon: <GetApp /> },
+  { uri: HIGHLIGHT_URI, name: 'Tech Log', icon: <Book />, nestedItems: TECH_ITEMS },
+  { uri: KNOWLEDGE_URI, name: NAMES[KNOWLEDGE], icon: <LibraryBooks /> },
+  { uri: TALK_URI, name: NAMES[TALK], icon: <SpeakerNotes /> },
 ]
 
 

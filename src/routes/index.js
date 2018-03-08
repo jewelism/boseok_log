@@ -1,19 +1,17 @@
 import React from 'react'
 import { Route } from "react-router-dom";
 
-import { TECH_ITEMS, TECH_PREFIX, LATEST_URI, ABOUT_URI, HIGHLIGHT_URI, MYAPPS_URI } from '../constants'
+import { TECH_ITEMS, TECH_PREFIX, LATEST_URI, ABOUT_URI, HIGHLIGHT_URI, MYAPPS_URI, KNOWLEDGE_URI, TALK_URI } from '../constants'
 
-import LatestListPage from '../components/Latest/LatestListPage'
 import AboutPage from '../components/About/AboutPage'
 import TechIndex from '../components/Tech'
-import TechHighlightPage from '../components/Tech/TechHighlightPage'
-import TechListPage from '../components/Tech/TechListPage'
+import ArticleListPage from '../components/Common/ArticleListPage'
 import MyAppPage from '../components/MyApp/MyAppPage'
 
 export const routes = [
   {
     path: LATEST_URI,
-    component: LatestListPage,
+    component: ArticleListPage,
     exact: true,
   },
   {
@@ -26,17 +24,25 @@ export const routes = [
     routes: [
       {
         path: HIGHLIGHT_URI,
-        component: TechHighlightPage
+        component: ArticleListPage
       },
       ...TECH_ITEMS.map((tech) => {
-        return { path: tech.uri, component: TechListPage }
+        return { path: tech.uri, component: ArticleListPage }
       })
     ]
   },
   {
     path: MYAPPS_URI,
     component: MyAppPage,
-  }
+  },
+  {
+    path: KNOWLEDGE_URI,
+    component: ArticleListPage,
+  },
+  {
+    path: TALK_URI,
+    component: ArticleListPage,
+  },
 ];
 
 export const RouteWithSubRoutes = route => (

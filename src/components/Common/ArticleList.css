@@ -1,0 +1,25 @@
+.article-list-table-tr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 20px;
+  padding-left: 75px;
+  padding-right: 75px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.article-list-table-tr:hover {
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+.article-list-table-td-id {
+  margin-right: 10px;
+}
+
+.article-list-table-td {
+  margin-right: 10px;
+}

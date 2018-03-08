@@ -25,11 +25,11 @@ class App extends Component {
         <MuiThemeProvider>
           <div className="App">
             <div className="app-container">
-              <Paper zDepth={3} style={{ marginBottom: '15px', padding: '10px' }}>
+              {/* <Paper zDepth={3} style={{ marginBottom: '15px', padding: '10px' }}>
                 <div className="app-container-top-title">
                   highlight
                 </div>
-              </Paper>
+              </Paper> */}
               <Paper zDepth={5} style={{ padding: '10px' }}>
                 <Switch>
                   {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
