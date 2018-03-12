@@ -39,8 +39,8 @@ function App4desktop(props) {
   return (
     <div className="App">
       <div className="app-menuWrapper">
-        <div className="app-menu-top-title">
-          Boseok Log
+        <div className="app-menu-top-title" onClick={() => window.location.href = '/'}>
+          Boseok.me
         </div>
         <MainMenu />
       </div>
@@ -60,8 +60,8 @@ function App4m() {
   return (
     <div className="App4m">
       <div className="app4m-menuWrapper">
-        <span>
-          Boseok Log
+        <span style={{ fontSize: 45 }} onClick={() => window.location.href = '/'}>
+          Boseok.me
         </span>
         <MainMenu4m />
       </div>

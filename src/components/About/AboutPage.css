@@ -28,7 +28,7 @@
   align-items: flex-end;
   text-align: right;
   margin-right: 20px;
-  width: 35vw;
+  width: 35%;
 }
 
 .about-right-wrapper {
@@ -37,7 +37,7 @@
   align-items: flex-start;
   text-align: left;
   margin-left: 20px;
-  width: 35vw;
+  width: 35%;
 }
 
 .about-subtitle {
@@ -63,7 +63,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* padding-left: 10px; */
   margin-bottom: -10px;
 }
 
