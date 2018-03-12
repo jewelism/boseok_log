@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import { ARTICLE_LIST, NAMES } from '../../constants'
+import { NAMES } from '../../constants'
 import ArticleList from '../Common/ArticleList'
 import './ArticleListPage.css'
 
-class TechListPage extends Component {
+class ArticleListPage extends Component {
   constructor(props) {
     super(props)
 
@@ -25,10 +25,10 @@ class TechListPage extends Component {
       title = '최근 게시물'
     }
 
-    const article_list = ARTICLE_LIST.filter((article) => {
-      return article.category === uri
-    })
-    this.setState({ uri, article_list, title })
+    // const article_list = ARTICLE_LIST.filter((article) => {
+    //   return article.category === uri
+    // })
+    this.setState({ uri, title })
   }
 
   onClickItem = (item) => {
@@ -49,4 +49,4 @@ class TechListPage extends Component {
   }
 }
 
-export default TechListPage
+export default ArticleListPage

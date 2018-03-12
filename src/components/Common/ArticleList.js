@@ -1,34 +1,13 @@
 import React from 'react'
-
-import { ARTICLE_LIST } from '../../constants'
-import { JS, REACT, CLOUD, MAC, NAMES } from '../../constants'
+import { NAMES } from '../../constants'
 import './ArticleList.css'
 
-function filteredList(article_list = ARTICLE_LIST, category) {
-  if (category) {
-    return article_list.filter((article) => {
-      if (category === 'tech') {
-        const tech = [JS, REACT, CLOUD, MAC]
-        let flag = false
-        // eslint-disable-next-line
-        tech.map((item) => {
-          if (item === article.category)
-            flag = true
-        })
-        return flag
-      } else {
-        return article.category === category
-      }
-    })
-  } else {
-    return article_list
-  }
-}
+import { getFilteredList } from './index'
 
 function ArticleList(props) {
   return (
     <div>
-      {filteredList(props.list, props.category).map((article, index) => {
+      {getFilteredList(props.list, props.category).map((article, index) => {
         return (
           <div
             onClick={() => props.onClickItem(article)}

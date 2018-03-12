@@ -8,6 +8,8 @@ import TechIndex from '../components/Tech'
 import ArticleListPage from '../components/Common/ArticleListPage'
 import MyAppPage from '../components/MyApp/MyAppPage'
 
+export * from './routes4m'
+
 export const routes = [
   {
     path: LATEST_URI,

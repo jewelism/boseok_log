@@ -1,0 +1,86 @@
+.about4m-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.about4m-name {
+  font-size: 60px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.about4m-job {
+  font-size: 45px;
+  margin-top: 30px;
+}
+
+.about4m-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+  font-size: 25px;
+}
+
+.about4m-left-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  margin-right: 20px;
+  width: 35vw;
+}
+
+.about4m-right-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  margin-left: 20px;
+  width: 35vw;
+}
+
+.about4m-subtitle {
+  font-style: bold;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.about4m-skill-title {
+  font-style: bold;
+  font-size: 35px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+
+.about4m-graph-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.about4m-graph-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* padding-left: 10px; */
+  margin-bottom: -10px;
+}
+
+.about4m-skill-name {
+  width: 30%;
+  font-size: 25px;
+}
+
+.about4m-skill-bar {
+  width: 70%;
+}

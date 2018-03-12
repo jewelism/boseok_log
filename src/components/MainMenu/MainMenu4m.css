@@ -1,0 +1,19 @@
+.mm4m-container {
+  font-size: 50px;
+}
+
+.mm4m-menu-label {
+  padding-top: 30px !important;
+  padding-bottom: 70px !important;
+  min-height: 55px !important;
+}
+
+.mm4m-menu-item {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  font-size: 40px !important;
+  padding-top: 45px !important;
+  padding-bottom: 45px !important;
+  padding-right: 25px !important;
+}

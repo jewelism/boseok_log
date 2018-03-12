@@ -1,13 +1,13 @@
 .App {
   display: flex;
-  width: 98vw;
-  height: 98vh;
+  /* width: 98vw;
+  height: 98vh; */
 }
 
 .app-container {
   width: 80%;
   height: 100%;
-  background-color: rgba(39, 39, 39, 0.2);
+  /* background-color: rgba(39, 39, 39, 0.2); */
   padding: 20px;
 }
 
@@ -28,4 +28,22 @@
   margin-top: 30px;
   margin-bottom: 20px;
   color: #272727;
+}
+
+/* for mobile */
+
+.App4m {
+  display: flex;
+  flex-direction: column;
+}
+
+.app4m-menuWrapper {
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 150px;
+  font-size: 35px;
 }
