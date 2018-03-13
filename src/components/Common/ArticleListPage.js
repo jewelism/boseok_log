@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 
+// import Dialog from 'material-ui/Dialog';
+
 import { NAMES } from '../../constants'
-import ArticleList from '../Common/ArticleList'
+import ArticleList from './ArticleList'
+import Article from './Article'
+
 import './ArticleListPage.css'
 
 class ArticleListPage extends Component {
@@ -11,6 +15,8 @@ class ArticleListPage extends Component {
     this.state = {
       article_list: [],
       title: null,
+      showArticle: false,
+      selectedArticle: {},
     }
   }
 
@@ -25,9 +31,6 @@ class ArticleListPage extends Component {
       title = '최근 게시물'
     }
 
-    // const article_list = ARTICLE_LIST.filter((article) => {
-    //   return article.category === uri
-    // })
     this.setState({ uri, title })
   }
 
@@ -35,6 +38,11 @@ class ArticleListPage extends Component {
     // this.props.history.push(item.category)
     // console.log(this.props)
     // console.log(item.category)
+    this.setState({ showArticle: true, selectedArticle: item })
+  }
+
+  closeArticle = () => {
+    this.setState({ showArticle: false })
   }
 
   render() {
@@ -44,6 +52,7 @@ class ArticleListPage extends Component {
         <div className="alp-table">
           <ArticleList category={this.state.uri} onClickItem={this.onClickItem} />
         </div>
+        <Article item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle}/>
       </div>
     )
   }

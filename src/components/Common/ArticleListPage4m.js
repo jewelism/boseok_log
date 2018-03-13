@@ -7,6 +7,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { getFilteredList } from './index'
 import { ARTICLE_LIST, NAMES } from '../../constants'
+import Article from './Article'
 
 import './ArticleListPage.css'
 
@@ -33,6 +34,8 @@ class ArticleListPage4m extends Component {
     this.state = {
       article_list: [],
       title: null,
+      showArticle: false,
+      selectedArticle: {},
     }
   }
 
@@ -57,6 +60,11 @@ class ArticleListPage4m extends Component {
   onClickItem = (article) => {
     // console.log(article)
     // this.props.history.push(article.category)
+    this.setState({ showArticle: true, selectedArticle: article })
+  }
+
+  closeArticle = () => {
+    this.setState({ showArticle: false })
   }
 
   render() {
@@ -86,6 +94,7 @@ class ArticleListPage4m extends Component {
             </GridTile>
           ))}
         </GridList>
+        <Article forMobile item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle}/>
       </div>
     )
   }

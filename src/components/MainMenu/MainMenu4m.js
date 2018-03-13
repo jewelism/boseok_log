@@ -43,6 +43,7 @@ class MainMenu4m extends Component {
           openSecondary
           docked={false}
           width={500}
+          swipeAreaWidth={200}
           open={this.state.isOpen}
           onRequestChange={(isOpen) => this.setState({ isOpen })}
         >
