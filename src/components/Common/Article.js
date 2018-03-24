@@ -4,9 +4,6 @@ import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 
 function Article(props) {
-  const titleFontSize = props.forMobile ? 45 : 17
-  const fontSize = props.forMobile ? 35 : 15
-
   // const actions = [
   //   <FlatButton
   //     label="닫기"
@@ -25,9 +22,9 @@ function Article(props) {
       open={props.open}
       onRequestClose={props.handleClose}
       autoScrollBodyContent={true}
-      titleStyle={{ fontSize: titleFontSize }}
-      bodyStyle={{ fontSize }}
-    // contentStyle={{fontSize:100}}
+      titleStyle={{ fontSize: props.forMobile ? 45 : 17 }}
+      bodyStyle={{ fontSize: props.forMobile ? 35 : 15 }}
+      contentStyle={{ width: '60%' }}
     >
       {props.item.content && props.item.content.split('\n').map((content, index) => {
         return (

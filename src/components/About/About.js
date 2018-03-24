@@ -1,17 +1,28 @@
 import React from 'react'
 
 import ProgressBar from '../Common/ProgressBar'
-import { SKILLS } from '../../constants'
 
 import './AboutPage.css'
 import './AboutPage4m.css'
 
 function About(props) {
+  const SKILLS = [
+    { name: 'HTML', per: 75 },
+    { name: 'CSS', per: 60 },
+    { name: 'Javascript', per: 90 },
+    { name: 'react.js', per: 85 },
+    { name: 'RN', per: 87 },
+    { name: 'vue.js', per: 80 },
+    { name: 'node.js', per: 75 },
+    { name: 'Java', per: 85 },
+    { name: 'Spring', per: 70 },
+  ]
+
   const className = props.className || ''
   return (
     <div className={`about${className}-container`}>
       <div className={`about${className}-name`}>Jung Boseok</div>
-      <div className={`about${className}-job`}>Front-End Developer</div>
+      <div className={`about${className}-job`}>Developer</div>
       <div className={`about${className}-row`}>
         <div className={`about${className}-left-wrapper`}>
           <div className={`about${className}-subtitle`}>Contact</div>

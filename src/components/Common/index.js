@@ -1,7 +1,9 @@
-import { ARTICLE_LIST } from '../../constants'
+import { getArticles } from '../../actions'
+
 import { JS, REACT, CLOUD, MAC } from '../../constants'
 
-export function getFilteredList(article_list = ARTICLE_LIST, category) {
+export async function getFilteredList(article_list, category) {
+  article_list = await getArticles() || []
   if (category) {
     return article_list.filter((article) => {
       if (category === 'tech') {

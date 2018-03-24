@@ -39,7 +39,7 @@ class ArticleListPage4m extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { pathname } = this.props.location
     let uri = pathname.substr(pathname.lastIndexOf('/') + 1, pathname.length)
     let title = NAMES[uri]
@@ -51,7 +51,9 @@ class ArticleListPage4m extends Component {
     }
     let article_list = ARTICLE_LIST
     if (uri !== '') {
-      article_list = getFilteredList(ARTICLE_LIST, uri)
+      article_list = await getFilteredList(ARTICLE_LIST, uri)
+    } else {
+      article_list = await getFilteredList(null, uri)
     }
     // console.log(article_list)
     this.setState({ uri, article_list, title })
@@ -94,7 +96,7 @@ class ArticleListPage4m extends Component {
             </GridTile>
           ))}
         </GridList>
-        <Article forMobile item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle}/>
+        <Article forMobile item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle} />
       </div>
     )
   }

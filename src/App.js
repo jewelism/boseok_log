@@ -10,6 +10,8 @@ import MainMenu from './components/MainMenu/MainMenu'
 import MainMenu4m from './components/MainMenu/MainMenu4m'
 import './App.css';
 
+const AppTitle = 'Boseok Log'
+
 const NotFoundPage = ({ location }) => {
   return (
     <h1>
@@ -40,7 +42,7 @@ function App4desktop(props) {
     <div className="App">
       <div className="app-menuWrapper">
         <div className="app-menu-top-title" onClick={() => window.location.href = '/'}>
-          Boseok.me
+          {AppTitle}
         </div>
         <MainMenu />
       </div>
@@ -61,7 +63,7 @@ function App4m() {
     <div className="App4m">
       <div className="app4m-menuWrapper">
         <span style={{ fontSize: 45 }} onClick={() => window.location.href = '/'}>
-          Boseok.me
+          {AppTitle}
         </span>
         <MainMenu4m />
       </div>

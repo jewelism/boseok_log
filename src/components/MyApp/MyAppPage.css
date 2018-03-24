@@ -13,6 +13,11 @@
 
 .my-app-page-item {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
+}
+
+.my-app-page-discription {
+  font-size: 15px;
 }
