@@ -5,7 +5,7 @@ import TechIndex from '../components/Tech'
 
 import AboutPage4m from '../components/About/AboutPage4m'
 import MyAppPage4m from '../components/MyApp/MyAppPage4m'
-import ArticleListPage4m from '../components/Common/ArticleListPage4m'
+import ArticleListPage4m from '../components/Article/ArticleListPage4m'
 
 
 export const routes4m = [

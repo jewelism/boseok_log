@@ -5,7 +5,7 @@ import { TECH_ITEMS, TECH_PREFIX, LATEST_URI, ABOUT_URI, HIGHLIGHT_URI, MYAPPS_U
 
 import AboutPage from '../components/About/AboutPage'
 import TechIndex from '../components/Tech'
-import ArticleListPage from '../components/Common/ArticleListPage'
+import ArticleListPage from '../components/Article/ArticleListPage'
 import MyAppPage from '../components/MyApp/MyAppPage'
 
 export * from './routes4m'
