@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
+import moment from 'moment';
 import { GridList, GridTile } from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
+// import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+// import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
 import { getFilteredList } from './index'
 import { ARTICLE_LIST, NAMES } from '../../constants'
@@ -23,6 +24,11 @@ const styles = {
     overflowY: 'auto',
   },
   fontSize: {
+    fontSize: '35px',
+  },
+  subtitle: {
+    position: 'absolute',
+    top: 70,
     fontSize: '35px',
   }
 };
@@ -70,27 +76,27 @@ class ArticleListPage4m extends Component {
   }
 
   render() {
-    const iconSize = '80px'
-    const btnStyle = { width: iconSize, height: iconSize }
+    // const iconSize = '80px'
+    // const btnStyle = { width: iconSize, height: iconSize }
     return (
       <div style={styles.root}>
         <GridList
           cellHeight={300}
           style={styles.gridList}
         >
-          <Subheader style={{ fontSize: '45px', padding: '25px' }}>{this.state.title}</Subheader>
+          <Subheader style={{ fontSize: '40px', padding: '25px' }}>{this.state.title}</Subheader>
           {this.state.article_list.map((article, index) => (
             <GridTile    //titleWrap => paddingTop:15
               onClick={e => this.onClickItem(article)}
               style={{ height: '295px', backgroundColor: 'gray' }}
-              subtitleStyle={styles.fontSize}
               key={index}
               titlePosition='top'
               title={<b>{article.title}</b>}
               titleBackground='gray'
               titleStyle={styles.fontSize}
-              subtitle={<span>{article.date}</span>}
-              actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
+              subtitle={<span>{moment(article.date).fromNow()}</span>}
+              subtitleStyle={styles.subtitle}
+              // actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
             >
               {/* <img src={tile.img} /> */}
             </GridTile>

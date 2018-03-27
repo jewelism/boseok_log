@@ -28,9 +28,12 @@ function Article(props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: props.forMobile ? 45 : 17
+        fontSize: props.forMobile ? 42 : 20,
+        padding: props.forMobile ? 50 : 20,
       }}
-      bodyStyle={{ fontSize: props.forMobile ? 35 : 15 }}
+      bodyStyle={{
+        fontSize: props.forMobile ? 30 : 15,
+      }}
       contentStyle={{ width: '60%' }}
     >
       <div style={{ display: 'flex', marginBottom: 10, fontWeight: 'bold', justifyContent: 'flex-end' }}>

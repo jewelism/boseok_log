@@ -29,22 +29,24 @@ function MyAppPage4m() {
         style={styles.gridList}
       >
         <Subheader style={{ fontSize: '45px', padding: '25px' }}>Boseok Web Applications</Subheader>
-        {PORTFOLIO_LIST.map((pf, index) => (
-          <GridTile
-            onClick={e => window.location.href = pf.uri}
-            style={{ height: '295px', backgroundColor: 'gray' }}
-            subtitleStyle={styles.fontSize}
-            key={index}
-            titlePosition='top'
-            title={<b>{pf.display}</b>}
-            titleBackground='gray'
-            titleStyle={styles.fontSize}
-            // subtitle={<span>{article.date}</span>}
+        {PORTFOLIO_LIST.map((pf, index) => {
+          return (
+            <GridTile
+              onClick={e => window.location.href = pf.uri}
+              style={{ height: '295px', backgroundColor: 'gray' }}
+              subtitleStyle={styles.fontSize}
+              key={index}
+              titlePosition='top'
+              title={<b>{pf.display}</b>}
+              titleBackground='gray'
+              titleStyle={styles.fontSize}
+              // subtitle={<span>{pf.date}</span>}
             // actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
-          >
-            {/* <img src={tile.img} /> */}
-          </GridTile>
-        ))}
+            >
+              {/* <img src={tile.img} /> */}
+            </GridTile>
+          )
+        })}
       </GridList>
     </div>
   )
