@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 // import Dialog from 'material-ui/Dialog';
+import moment from 'moment'
 
 import { NAMES } from '../../constants'
 import Article from './Article'
@@ -61,7 +62,7 @@ class ArticleListPage extends Component {
                     <span className="article-list-table-td">-</span>
                     <span className="article-list-table-td">{article.title}</span>
                   </span>
-                  <div className="article-list-table-td">{article.date}</div>
+                  <div className="article-list-table-td">{moment(article.date).fromNow()}</div>
                 </div>
               )
             })}

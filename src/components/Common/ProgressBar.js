@@ -2,6 +2,8 @@ import React from 'react'
 
 import styled, { keyframes } from 'styled-components';
 
+import ProgressImg from '../../assets/images/progress.gif';
+
 function ProgressBar({ percentage, index }) {
   const Container = styled.div`
     width: 100%;
@@ -16,7 +18,8 @@ function ProgressBar({ percentage, index }) {
     height: 20px;
     width: 100%;
     overflow: hidden;
-    background: url('http://www.cssdeck.com/uploads/media/items/7/7uo1osj.gif') repeat-x;
+    /* background: url('http://www.cssdeck.com/uploads/media/items/7/7uo1osj.gif') repeat-x; */
+    background: url(${ProgressImg}) repeat-x;
     -moz-opacity: 0.25;
     -khtml-opacity: 0.25;
     opacity: 0.25;
@@ -48,7 +51,7 @@ function ProgressBar({ percentage, index }) {
   return (
     <Container>
       <Progress>
-        <Pbaranim/>
+        <Pbaranim />
       </Progress>
     </Container>
   )

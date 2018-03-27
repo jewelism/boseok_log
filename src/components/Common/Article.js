@@ -1,5 +1,6 @@
 import React from 'react'
 
+import moment from 'moment'
 import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 
@@ -14,6 +15,7 @@ function Article(props) {
   //   />,
   // ];
 
+  const date = props.item.date ? props.item.date : new Date()
   return (
     <Dialog
       title={props.item.title}
@@ -22,10 +24,18 @@ function Article(props) {
       open={props.open}
       onRequestClose={props.handleClose}
       autoScrollBodyContent={true}
-      titleStyle={{ fontSize: props.forMobile ? 45 : 17 }}
+      titleStyle={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: props.forMobile ? 45 : 17
+      }}
       bodyStyle={{ fontSize: props.forMobile ? 35 : 15 }}
       contentStyle={{ width: '60%' }}
     >
+      <div style={{ display: 'flex', marginBottom: 10, fontWeight: 'bold', justifyContent: 'flex-end' }}>
+        {moment(date).format("LLL")}
+      </div>
       {props.item.content && props.item.content.split('\n').map((content, index) => {
         return (
           <div key={index}>

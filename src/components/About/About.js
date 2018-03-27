@@ -14,7 +14,7 @@ function About(props) {
     { name: 'RN', per: 87 },
     { name: 'vue.js', per: 80 },
     { name: 'node.js', per: 75 },
-    { name: 'Java', per: 85 },
+    { name: 'Java', per: 80 },
     { name: 'Spring', per: 70 },
   ]
 
