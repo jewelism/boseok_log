@@ -1,36 +1,17 @@
-const BASE_URI = 'https://boseok.me:3443'
+// freegeoip.net/json/
 
-export const getArticles = () => {
+export const getUserIp = () => {
   return new Promise((resolve) => {
-    fetch(`${BASE_URI}/articles/all`)
+    fetch(`https://freegeoip.net/json/`)
       .then((response) => {
         return response.json()
       })
       .then((responseJson) => {
-        resolve(responseJson.data)
+        resolve(responseJson)
       })
       .catch((err) => {
         console.warn(err)
         resolve(false)
       })
-  })
-}
-
-export const saveArticles = (body, isUpdate) => {
-  return new Promise((resolve) => {
-    fetch(`${BASE_URI}/articles`, {
-      method: isUpdate ? 'PUT' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    }).then((response) => {
-      return response.json()
-    }).then((responseJson) => {
-      resolve(responseJson)
-    }).catch((err) => {
-      console.warn(err)
-      resolve(false)
-    })
   })
 }

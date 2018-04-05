@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 
-import moment from 'moment'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import socketIOClient from 'socket.io-client';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-import { routes, routes4m, RouteWithSubRoutes } from './routes'
-import MainMenu from './components/MainMenu/MainMenu'
-import MainMenu4m from './components/MainMenu/MainMenu4m'
+import { routes, routes4m, RouteWithSubRoutes } from './routes';
+import MainMenu from './components/MainMenu/MainMenu';
+import MainMenu4m from './components/MainMenu/MainMenu4m';
+import './utils/moment_config';
 import './App.css';
 
-const AppTitle = 'Boseok Log'
+import { isMobile } from './utils';
+import { getUserIp } from './actions'
+
+const AppTitle = 'Boseok Log';
 
 const NotFoundPage = ({ location }) => {
   return (
@@ -20,18 +24,74 @@ const NotFoundPage = ({ location }) => {
         Page not found {location.pathname}
       </center>
     </h1>
-  )
-}
+  );
+};
+
+const socket = socketIOClient("boseok.me:3000");
 
 class App extends Component {
-  render() {
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  constructor(props) {
+    super(props);
+    this.state = {
+      messageList: [],
+      chatInput: '',
+      userTextColor: '#272727'
+    };
+  }
+
+  componentDidMount() {
+    try {
+      getUserIp()
+        .then((data) => {
+          if (data.ip && data.ip.substr) {
+            const ipArr = data.ip.split(".");
+            const userTextColor = `#2${Math.abs(parseInt(ipArr[0], 10) + parseInt(ipArr[3], 10) - 1000)}27`;
+            this.setState({ userTextColor });
+          }
+        })
+    } catch (err) {
+
     }
+
+    socket.on('chat', (data) => {
+      const message = data;
+      console.log(data);
+      this.setState({ messageList: [...this.state.messageList, message] });
+    });
+  }
+
+  handleSendBtn = (event) => {
+    socket.emit('chat', this.state.chatInput);
+    this.setState({ messageList: [...this.state.messageList, this.state.chatInput] });
+    event.preventDefault();
+  }
+
+  handleChatInput = (e) => {
+    this.setState({ chatInput: e.target.value })
+  }
+
+  Chat = () => {
+    return (
+      <div>
+        <form onSubmit={this.handleSendBtn}>
+          <input onChange={this.handleChatInput} />
+          <input type="submit" value="send" />
+        </form>
+        {this.state.messageList.map((msg, index) => {
+          return (
+            <div key={index} style={{ color: this.state.userTextColor }}>{msg}</div>
+          )
+        })}
+      </div>
+    );
+  }
+
+  render() {
     return (
       <Router>
         <MuiThemeProvider>
           {isMobile() ? App4m() : App4desktop()}
+          {this.Chat()}
         </MuiThemeProvider>
       </Router>
     );
@@ -79,33 +139,5 @@ function App4m() {
     </div>
   )
 }
-
-moment.locale('kr');
-moment.updateLocale('en', {
-  relativeTime: {
-    future: "%s 후",
-    past: "%s 전",
-    s: '방금',
-    ss: '%d초',
-    m: "1분",
-    mm: "%d분",
-    h: "1시간",
-    hh: "%d시간",
-    d: "하루",
-    dd: "%d일",
-    M: "한달",
-    MM: "%d달",
-    y: "1년",
-    yy: "%d년"
-  },
-  longDateFormat: {
-    LT: 'HH:mm',
-    LTS: 'HH:mm:ss',
-    L: 'YYYY/DD/MM',
-    LL: 'D MMMM YYYY',
-    LLL: 'YYYY/MM/DD HH:mm',
-    LLLL: 'dddd D MMMM YYYY HH:mm'
-  }
-});
 
 export default App;
