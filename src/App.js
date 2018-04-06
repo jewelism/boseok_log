@@ -31,7 +31,7 @@ const NotFoundPage = ({ location }) => {
   );
 };
 
-const socket = socketIOClient("boseok.me:3000");
+const socket = socketIOClient("boseok.me:3033");
 
 class App extends Component {
   constructor(props) {
