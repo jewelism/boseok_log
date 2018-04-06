@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import moment from 'moment';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -33,7 +33,7 @@ const styles = {
   }
 };
 
-class ArticleListPage4m extends Component {
+class ArticleListPage4m extends PureComponent {
   constructor(props) {
     super(props)
 

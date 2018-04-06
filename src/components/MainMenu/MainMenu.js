@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 
 import { withRouter } from "react-router-dom";
 import { List, ListItem } from 'material-ui/List';
@@ -7,7 +7,7 @@ import { MENU_ITEMS } from '../../constants'
 
 const BackGrayColor = { backgroundColor: 'rgba(39, 39, 39, 0.2)' }
 const BackNoColor = { backgroundColor: 'transparent' }
-class MainMenu extends React.Component {
+class MainMenu extends PureComponent {
 
   constructor(props) {
     super(props)

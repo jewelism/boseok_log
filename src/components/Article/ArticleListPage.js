@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 // import Dialog from 'material-ui/Dialog';
 import moment from 'moment'
@@ -10,7 +10,7 @@ import { getFilteredList } from './index'
 import './ArticleListPage.css'
 import './ArticleList.css'
 
-class ArticleListPage extends Component {
+class ArticleListPage extends PureComponent {
   constructor(props) {
     super(props)
 

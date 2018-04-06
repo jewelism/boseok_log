@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import socketIOClient from 'socket.io-client';
 
@@ -31,11 +31,9 @@ const NotFoundPage = ({ location }) => {
   );
 };
 
-// const socket = socketIOClient("boseok.me:3443");
 const socket = socketIOClient("https://boseok.me:3443");
 
-
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

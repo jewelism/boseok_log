@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import { withRouter } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import { MENU_ITEMS } from '../../constants'
 
 import './MainMenu4m.css'
 
-class MainMenu4m extends Component {
+class MainMenu4m extends PureComponent {
   constructor(props) {
     super(props)
 
