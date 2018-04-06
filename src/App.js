@@ -52,8 +52,8 @@ class App extends PureComponent {
   };
 
   handleSendBtn = (event) => {
-    socket.emit('chat', this.state.chatInput);
-    this.setState({ messageList: [...this.state.messageList, this.state.chatInput], chatInput: "" });
+    socket.emit('chat', { author: '익명', text: this.state.chatInput });
+    this.setState({ messageList: [...this.state.messageList, { author: 'me', text: this.state.chatInput }], chatInput: "" });
     event.preventDefault();
   }
 
@@ -86,32 +86,46 @@ class App extends PureComponent {
       backgroundColor: '#F0F0F0',
       width: isMobile() ? 500 : 400, height: isMobile() ? 600 : 400,
       display: 'flex',
-      // flexWrap: 'wrap',
       flexDirection: 'column',
-      opacity: 0.8,
+      opacity: 0.98,
       borderRadius: 15,
 
     };
     const titleStyle = { display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 };
     const messageContainerStyle = {
-      height: '72%',
-      paddingTop: 20,
-      paddingLeft: 20,
-      paddingRight: 20,
-      fontSize: isMobile() ? 30 : 15,
-      overflowY: 'scroll',
-      overflowX: 'hidden',
+      height: '72%', paddingTop: 20, paddingLeft: 20, paddingRight: 20,
+      fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
     };
     const formStyle = { position: 'absolute', bottom: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' };
     const chatInputStyle = { width: '75%', borderRadius: 10, padding: '1.5%', marginRight: '2%', fontSize: isMobile() ? 35 : 16 };
     const sendBtnStyle = { width: '15%', borderRadius: 10, padding: isMobile() ? '3%' : '0.5%' };
+    const myMsgStyle = { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 };
+    const anonymousMsgStyle = { color: this.state.userTextColor, display: 'flex', justifyContent: 'flex-start', marginBottom: 5 };
+    const MsgText = function (props) {
+      return (
+        <div style={{ backgroundColor: '#FFF', padding: 5, paddingRight: 10, paddingLeft: 10, borderRadius: 5 }}>{props.text}</div>
+      )
+    };
     return (
       <Paper zDepth={3} style={containerStyle}>
         <div style={titleStyle}>
           익명 채팅
         </div>
         <div style={messageContainerStyle} ref={(el) => { this.messagesEnd = el; }}>
-          {this.state.messageList.map((msg, index) => <div key={index} style={{ color: this.state.userTextColor }}>{msg}</div>)}
+          {this.state.messageList.map((msg, index) => {
+            if (msg.author === "me") {
+              return (
+                <div key={index} style={myMsgStyle}>
+                  <MsgText text={msg.text} />
+                </div>
+              );
+            }
+            return (
+              <div key={index} style={anonymousMsgStyle}>
+                <MsgText text={msg.text} />
+              </div>
+            );
+          })}
         </div>
         <form onSubmit={this.handleSendBtn} style={formStyle}>
           <input onChange={this.handleChatInput} value={this.state.chatInput} style={chatInputStyle} autoFocus />
