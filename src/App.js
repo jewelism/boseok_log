@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import Snackbar from 'material-ui/Snackbar';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { routes, routes4m, RouteWithSubRoutes } from './routes';
@@ -40,8 +41,15 @@ class App extends Component {
       chatInput: '',
       userTextColor: '#272727',
       chatIsOpen: false,
+      snackbarIsOpen: false,
     };
   }
+
+  handleSnackbarRequestClose = () => {
+    this.setState({
+      snackbarIsOpen: false,
+    });
+  };
 
   handleSendBtn = (event) => {
     socket.emit('chat', this.state.chatInput);
@@ -114,9 +122,8 @@ class App extends Component {
   }
 
   scrollToBottom = () => {
-    if(this.state.chatIsOpen){
-      // use window.scrollTo
-      this.messagesEnd.scrollIntoView();
+    if (this.state.chatIsOpen) {
+      this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight;
     }
   }
 
@@ -141,7 +148,11 @@ class App extends Component {
 
     socket.on('chat', (data) => {
       const message = data;
+
       this.setState({ messageList: [...this.state.messageList, message] });
+      if (!this.state.chatIsOpen) {
+        this.setState({ snackbarIsOpen: true });
+      }
     });
   }
 
@@ -153,6 +164,13 @@ class App extends Component {
             {isMobile() ? App4m() : App4desktop()}
             {this.ChatToggleBtn()}
             {this.state.chatIsOpen && this.Chat()}
+            <Snackbar
+              open={this.state.snackbarIsOpen}
+              message="새로운 채팅메시지가 왔어요!"
+              autoHideDuration={4000}
+              onRequestClose={this.handleSnackbarRequestClose}
+              contentStyle={{ display: 'flex', justifyContent: 'center' }}
+            />
           </div>
         </MuiThemeProvider>
       </Router>
