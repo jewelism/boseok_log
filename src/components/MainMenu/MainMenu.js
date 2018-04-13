@@ -1,7 +1,8 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 
 import { withRouter } from "react-router-dom";
 import { List, ListItem } from 'material-ui/List';
+import SmartPhoneIcon from 'material-ui/svg-icons/hardware/smartphone';
 
 import { MENU_ITEMS } from '../../constants'
 
@@ -61,6 +62,12 @@ class MainMenu extends PureComponent {
             return this.menuItem({ index, item })
           }
         })}
+        <ListItem
+          style={BackNoColor}
+          primaryText={"Mobile화면으로 보기"}
+          leftIcon={<SmartPhoneIcon/>}
+          onClick={this.props.toggleView}
+        />
       </List>
     );
   }

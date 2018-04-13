@@ -26,12 +26,23 @@ const NotFoundPage = ({ location }) => {
 };
 
 class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: isMobile()
+    };
+  }
+
+  toggleView = () => {
+    this.setState({ isMobile: !this.state.isMobile });
+  }
+
   render() {
     return (
       <Router>
         <MuiThemeProvider>
           <div>
-            {isMobile() ? App4m() : App4desktop()}
+            {this.state.isMobile ? <App4m toggleView={this.toggleView}/> : <App4desktop toggleView={this.toggleView}/>}
             <Chat />
           </div>
         </MuiThemeProvider>
@@ -47,7 +58,7 @@ function App4desktop(props) {
         <div className="app-menu-top-title" onClick={() => window.location.href = '/'}>
           {AppTitle}
         </div>
-        <MainMenu />
+        <MainMenu toggleView={props.toggleView} />
       </div>
       <div className="app-container">
         <Paper zDepth={5} style={{ padding: '10px', margin: '30px' }}>
@@ -61,14 +72,14 @@ function App4desktop(props) {
   )
 }
 
-function App4m() {
+function App4m(props) {
   return (
     <div className="App4m">
       <div className="app4m-menuWrapper">
         <span style={{ fontSize: 45 }} onClick={() => window.location.href = '/'}>
           {AppTitle}
         </span>
-        <MainMenu4m />
+        <MainMenu4m toggleView={props.toggleView}/>
       </div>
       <div className="app4m-container">
         <Paper zDepth={5} style={{ padding: '10px', margin: '80px' }}>

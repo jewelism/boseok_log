@@ -61,7 +61,8 @@ class MainMenu4m extends PureComponent {
             }
             return this.renderMenuItem(item)
           })}
-
+          <Divider inset={true} />
+          <MenuItem className="mm4m-menu-item" onClick={this.props.toggleView}>{"PC버전으로 보기"}</MenuItem>
         </Drawer>
       </div>
     )
