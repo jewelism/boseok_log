@@ -95,6 +95,7 @@ class Chat extends PureComponent {
       socket.emit('chat', { author: '익명', text: this.state.chatInput, time: Date.now() });
       this.setState({ messageList: [...this.state.messageList, { author: 'me', text: this.state.chatInput, time: Date.now() }], chatInput: "" });
     }
+    this.chatInputRef.focus();
     event.preventDefault();
   }
 
@@ -133,7 +134,7 @@ class Chat extends PureComponent {
               })}
             </div>
             <form onSubmit={this.handleSendBtn} style={styles.formStyle}>
-              <input onChange={this.handleChatInput} value={this.state.chatInput} style={styles.chatInputStyle} autoFocus />
+              <input ref={(el) => { this.chatInputRef = el; }} onChange={this.handleChatInput} value={this.state.chatInput} style={styles.chatInputStyle} autoFocus />
               <button type="submit" style={styles.sendBtnStyle}><SendIcon /></button>
             </form>
           </Paper>
