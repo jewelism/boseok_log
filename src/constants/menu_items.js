@@ -6,7 +6,7 @@ import GetApp from 'material-ui/svg-icons/action/get-app';
 import Book from 'material-ui/svg-icons/action/book';
 import Code from 'material-ui/svg-icons/action/code';
 import Cloud from 'material-ui/svg-icons/file/cloud';
-import Mac from 'material-ui/svg-icons/hardware/desktop-mac';
+// import Mac from 'material-ui/svg-icons/hardware/desktop-mac';
 import LibraryBooks from 'material-ui/svg-icons/av/library-books';
 import SpeakerNotes from 'material-ui/svg-icons/action/speaker-notes';
 
@@ -16,19 +16,21 @@ export const TALK = 'talk';
 export const JS = 'js';
 export const REACT = 'react';
 export const CLOUD = 'cloud';
-export const MAC = 'mac';
+// export const MAC = 'mac';
+
+export const TECH_CONSTANTS = [JS, REACT, CLOUD];
 
 export const TECH_PREFIX = '/tech';
 export const JS_URI = `${TECH_PREFIX}/${JS}`;
 export const REACT_URI = `${TECH_PREFIX}/${REACT}`;
 export const CLOUD_URI = `${TECH_PREFIX}/${CLOUD}`;
-export const MAC_URI = `${TECH_PREFIX}/${MAC}`;
+// export const MAC_URI = `${TECH_PREFIX}/${MAC}`;
 
 export const NAMES = {
   [JS]: 'Javascript',
   [REACT]: 'React.js',
   [CLOUD]: 'Cloud Server',
-  [MAC]: 'Mac OS',
+  // [MAC]: 'Mac OS',
   [KNOWLEDGE]: 'Knowledge',
   [TALK]: '심심해서 쓰는 글',
 };
@@ -37,7 +39,7 @@ export const TECH_ITEMS = [
   { id: JS, uri: JS_URI, name: NAMES[JS], icon: <Code /> },
   { id: REACT, uri: REACT_URI, name: NAMES[REACT], icon: <Code /> },
   { id: CLOUD, uri: CLOUD_URI, name: NAMES[CLOUD], icon: <Cloud /> },
-  { id: MAC, uri: MAC_URI, name: NAMES[MAC], icon: <Mac /> },
+  // { id: MAC, uri: MAC_URI, name: NAMES[MAC], icon: <Mac /> },
 ];
 
 export const LATEST_URI = '/';

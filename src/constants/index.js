@@ -1,3 +1,2 @@
-export * from './menu_items'
-export * from './articles'
-export * from './portfolios'
+export * from './menu_items';
+export * from './portfolios';

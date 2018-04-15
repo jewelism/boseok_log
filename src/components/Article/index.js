@@ -1,7 +1,6 @@
 import { getArticles } from '../../actions'
 
-import { JS, REACT, CLOUD, MAC } from '../../constants';
-import { NAMES, TECH, TECH_TITLE, LASTEST } from '../../constants';
+import { TECH_CONSTANTS, NAMES, TECH, TECH_TITLE, LASTEST } from '../../constants';
 
 async function getFilteredList(category) {
   const article_list = await getArticles() || [];
@@ -10,7 +9,7 @@ async function getFilteredList(category) {
       if (category === 'tech') {
         let flag = false;
         // eslint-disable-next-line
-        [JS, REACT, CLOUD, MAC].map(item => {
+        TECH_CONSTANTS.map(item => {
           if (item === article.category){
             flag = true;
           }
