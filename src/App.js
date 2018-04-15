@@ -37,60 +37,43 @@ class App extends PureComponent {
     this.setState({ isMobile: !this.state.isMobile });
   }
 
+  renderApp = () => {
+    const { isMobile } = this.state;
+    const className = isMobile ? '4m' : '';
+    const MENU = isMobile ? MainMenu4m : MainMenu;
+    const ROUTES = isMobile ? routes4m : routes;
+    return (
+      <div className={`App${className}`}>
+        <div className={`app${className}-menuWrapper`}>
+          <div className={`app${className}-menu-top-title`} onClick={() => window.location.href = '/'}>
+            {AppTitle}
+          </div>
+          <MENU toggleView={this.toggleView} />
+        </div>
+        <div className={`app${className}-container`}>
+          <Paper zDepth={5} className={`app${className}-paper`}>
+            <Switch>
+              {ROUTES.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+              <Route component={NotFoundPage} />
+            </Switch>
+          </Paper>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <Router>
         <MuiThemeProvider>
           <div>
-            {this.state.isMobile ? <App4m toggleView={this.toggleView}/> : <App4desktop toggleView={this.toggleView}/>}
+            {this.renderApp()}
             <Chat />
           </div>
         </MuiThemeProvider>
       </Router>
     );
   }
-}
-
-function App4desktop(props) {
-  return (
-    <div className="App">
-      <div className="app-menuWrapper">
-        <div className="app-menu-top-title" onClick={() => window.location.href = '/'}>
-          {AppTitle}
-        </div>
-        <MainMenu toggleView={props.toggleView} />
-      </div>
-      <div className="app-container">
-        <Paper zDepth={5} style={{ padding: '10px', margin: '30px' }}>
-          <Switch>
-            {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Paper>
-      </div>
-    </div>
-  )
-}
-
-function App4m(props) {
-  return (
-    <div className="App4m">
-      <div className="app4m-menuWrapper">
-        <span style={{ fontSize: 45 }} onClick={() => window.location.href = '/'}>
-          {AppTitle}
-        </span>
-        <MainMenu4m toggleView={props.toggleView}/>
-      </div>
-      <div className="app4m-container">
-        <Paper zDepth={5} style={{ padding: '10px', margin: '80px' }}>
-          <Switch>
-            {routes4m.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Paper>
-      </div>
-    </div>
-  )
 }
 
 export default App;

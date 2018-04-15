@@ -33,7 +33,7 @@ const styles = {
   chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', fontSize: isMobile() ? 35 : 16 },
   sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
   myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
-  anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 },
+  anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 }
 };
 
 const UserInfo = navigator.userAgent;
@@ -48,7 +48,7 @@ class Chat extends PureComponent {
       dbMsgList: [],
       messageList: [],
       userTextColor: '#272727',
-      snackbarIsOpen: false,
+      snackbarIsOpen: false
     };
   }
 
@@ -107,15 +107,9 @@ class Chat extends PureComponent {
     event.preventDefault();
   }
 
-  handleSnackbarRequestClose = () => {
-    this.setState({
-      snackbarIsOpen: false,
-    });
-  };
+  handleSnackbarRequestClose = () => this.setState({ snackbarIsOpen: false });
 
-  onClickChatToggleBtn = () => {
-    this.setState({ chatIsOpen: !this.state.chatIsOpen });
-  }
+  onClickChatToggleBtn = () => this.setState({ chatIsOpen: !this.state.chatIsOpen });
 
   renderMsgList = () => {
     return (
