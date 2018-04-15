@@ -15,7 +15,8 @@ function Article(props) {
   //   />,
   // ];
 
-  const date = props.item.date ? props.item.date : new Date()
+  const date = props.item.date ? props.item.date : new Date();
+  const isMobile = props.forMobile;
   return (
     <Dialog
       title={props.item.title}
@@ -28,15 +29,15 @@ function Article(props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: props.forMobile ? 42 : 20,
-        padding: props.forMobile ? 50 : 20,
+        fontSize: isMobile ? 38 : 20,
+        padding: isMobile ? 50 : 20,
       }}
       bodyStyle={{
-        fontSize: props.forMobile ? 30 : 15,
+        fontSize: isMobile ? 30 : 15,
       }}
-      contentStyle={{ width: '60%' }}
+      contentStyle={{ width: isMobile ? '77%' : '60%' }}
     >
-      <div style={{ display: 'flex', marginBottom: 10, fontWeight: 'bold', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', marginTop: 20, marginBottom: 35, fontWeight: 'bold', justifyContent: 'flex-end' }}>
         {moment(date).format("LLL")}
       </div>
       {props.item.content && props.item.content.split('\n').map((content, index) => {

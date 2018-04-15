@@ -1,48 +1,36 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent } from 'react';
 
 // import Dialog from 'material-ui/Dialog';
-import moment from 'moment'
+import moment from 'moment';
 
-import { NAMES } from '../../constants'
-import Article from './Article'
-import { getFilteredList } from './index'
+import { NAMES } from '../../constants';
+import Article from './Article';
+import { getArticlePageInfo } from './index';
 
-import './ArticleListPage.css'
-import './ArticleList.css'
+import './ArticleListPage.css';
+import './ArticleList.css';
 
 class ArticleListPage extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       article_list: [],
       title: null,
       showArticle: false,
-      selectedArticle: {},
-    }
+      selectedArticle: {}
+    };
   }
 
   async componentDidMount() {
-    const { pathname } = this.props.location
-    let uri = pathname.substr(pathname.lastIndexOf('/') + 1, pathname.length)
-    let title = NAMES[uri]
-    if (uri === 'highlight') {
-      uri = 'tech'
-      title = 'See All'
-    } else if (uri === '') {
-      title = '최근 게시물'
-    }
-    const article_list = await getFilteredList(null, uri) || []
-    this.setState({ uri, title, article_list })
+    const { pathname } = this.props.location;
+    const { uri, title, article_list } = await getArticlePageInfo(pathname)
+    this.setState({ uri, title, article_list });
   }
 
-  onClickItem = (item) => {
-    this.setState({ showArticle: true, selectedArticle: item })
-  }
+  onClickItem = item => this.setState({ showArticle: true, selectedArticle: item })
 
-  closeArticle = () => {
-    this.setState({ showArticle: false })
-  }
+  closeArticle = () => this.setState({ showArticle: false });
 
   render() {
     return (
@@ -74,4 +62,4 @@ class ArticleListPage extends PureComponent {
   }
 }
 
-export default ArticleListPage
+export default ArticleListPage;

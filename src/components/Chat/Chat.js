@@ -18,7 +18,7 @@ const styles = {
     bottom: isMobile() ? 200 : 140,
     right: isMobile() ? 80 : 50,
     backgroundColor: '#F0F0F0',
-    width: isMobile() ? 500 : 400, height: isMobile() ? 600 : 400,
+    width: isMobile() ? '65%' : 400, height: isMobile() ? '50%' : 400,
     display: 'flex',
     flexDirection: 'column',
     opacity: 0.98,
@@ -26,12 +26,12 @@ const styles = {
   },
   titleStyle: { display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 },
   messageContainerStyle: {
-    height: '72%', paddingTop: 20, paddingLeft: 20, paddingRight: 20,
+    height: isMobile() ? '79%' : '74%', paddingTop: 20, paddingLeft: 20, paddingRight: 20,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
   },
-  formStyle: { position: 'absolute', bottom: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  chatInputStyle: { width: '75%', borderRadius: 10, padding: '1.5%', marginRight: '2%', fontSize: isMobile() ? 35 : 16 },
-  sendBtnStyle: { width: '15%', borderRadius: 10, padding: isMobile() ? '3%' : '0.5%' },
+  formStyle: { position: 'absolute', bottom: 10, width: '100%', height: '9%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', fontSize: isMobile() ? 35 : 16 },
+  sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
   myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
   anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 },
 };
@@ -53,7 +53,6 @@ class Chat extends PureComponent {
   }
 
   componentDidMount() {
-    // console.log('mounted', UserInfo);
     getChats()
       .then(dbMsgList => this.setState({ dbMsgList }));
 
@@ -72,6 +71,7 @@ class Chat extends PureComponent {
     }
 
     socket.on('chat', (data) => {
+      // console.log(socket.id);
       const message = data;
       this.setState({ messageList: [...this.state.messageList, message] });
       if (!this.state.chatIsOpen) {

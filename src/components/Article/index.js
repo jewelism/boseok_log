@@ -1,25 +1,39 @@
 import { getArticles } from '../../actions'
 
-import { JS, REACT, CLOUD, MAC } from '../../constants'
+import { JS, REACT, CLOUD, MAC } from '../../constants';
+import { NAMES, TECH, TECH_TITLE, LASTEST } from '../../constants';
 
-export async function getFilteredList(article_list, category) {
-  article_list = await getArticles() || []
+async function getFilteredList(category) {
+  const article_list = await getArticles() || [];
   if (category) {
     return article_list.filter((article) => {
       if (category === 'tech') {
-        const tech = [JS, REACT, CLOUD, MAC]
-        let flag = false
+        let flag = false;
         // eslint-disable-next-line
-        tech.map((item) => {
-          if (item === article.category)
-            flag = true
-        })
-        return flag
+        [JS, REACT, CLOUD, MAC].map(item => {
+          if (item === article.category){
+            flag = true;
+          }
+        });
+        return flag;
       } else {
-        return article.category === category
+        return article.category === category;
       }
-    })
+    });
   } else {
-    return article_list
+    return article_list;
   }
+}
+
+export async function getArticlePageInfo(pathname) {
+  let uri = pathname.substr(pathname.lastIndexOf('/') + 1, pathname.length);
+  let title = NAMES[uri];
+  if (uri === 'highlight') {
+    uri = TECH;
+    title = TECH_TITLE;
+  } else if (uri === '') {
+    title = LASTEST;
+  }
+  const article_list = await getFilteredList(uri) || [];
+  return { uri, title, article_list };
 }
