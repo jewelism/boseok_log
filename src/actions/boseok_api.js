@@ -1,15 +1,11 @@
-const BASE_URI = 'https://boseok.me:3443'
+const BASE_URI = 'https://boseok.me:3443';
 
 export const getArticles = () => {
   return new Promise((resolve) => {
     fetch(`${BASE_URI}/articles/all`)
-      .then((response) => {
-        return response.json()
-      })
-      .then((responseJson) => {
-        resolve(responseJson.data)
-      })
-      .catch((err) => {
+      .then(response => response.json())
+      .then(responseJson => resolve(responseJson.data))
+      .catch(err => {
         console.warn(err)
         resolve(false)
       })
@@ -24,13 +20,42 @@ export const saveArticles = (body, isUpdate) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body)
-    }).then((response) => {
-      return response.json()
-    }).then((responseJson) => {
-      resolve(responseJson)
-    }).catch((err) => {
-      console.warn(err)
-      resolve(false)
     })
+      .then(response => response.json())
+      .then(responseJson => resolve(responseJson))
+      .catch(err => {
+        console.warn(err);
+        resolve(false);
+      })
+  })
+}
+
+export const getChats = () => {
+  return new Promise((resolve) => {
+    fetch(`${BASE_URI}/chats`)
+      .then(response => response.json())
+      .then(responseJson => resolve(responseJson.data))
+      .catch(err => {
+        console.warn(err);
+        resolve(false);
+      })
+  })
+}
+
+export const saveChats = (author, text) => {
+  return new Promise((resolve) => {
+    fetch(`${BASE_URI}/chats`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ author, text })
+    })
+      .then(response => response.json())
+      .then(responseJson => resolve(responseJson))
+      .catch(err => {
+        console.warn(err);
+        resolve(false);
+      })
   })
 }

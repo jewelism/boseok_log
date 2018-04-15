@@ -8,7 +8,7 @@ import socketIOClient from 'socket.io-client';
 
 import ChatToggleBtn from './ChatToggleBtn';
 import { isMobile } from '../../utils';
-import { getUserIp } from '../../actions';
+import { getUserIp, getChats, saveChats } from '../../actions';
 
 const socket = socketIOClient("https://boseok.me:3443");
 
@@ -36,6 +36,7 @@ const styles = {
   anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 },
 };
 
+const UserInfo = navigator.userAgent;
 
 class Chat extends PureComponent {
 
@@ -44,6 +45,7 @@ class Chat extends PureComponent {
     this.state = {
       chatIsOpen: false,
       chatInput: '',
+      dbMsgList: [],
       messageList: [],
       userTextColor: '#272727',
       snackbarIsOpen: false,
@@ -51,6 +53,10 @@ class Chat extends PureComponent {
   }
 
   componentDidMount() {
+    // console.log('mounted', UserInfo);
+    getChats()
+      .then(dbMsgList => this.setState({ dbMsgList }));
+
     this.scrollToBottom();
     try {
       getUserIp()
@@ -91,9 +97,11 @@ class Chat extends PureComponent {
   }
 
   handleSendBtn = (event) => {
-    if (this.state.chatInput.trim()) {
-      socket.emit('chat', { author: '익명', text: this.state.chatInput, time: Date.now() });
-      this.setState({ messageList: [...this.state.messageList, { author: 'me', text: this.state.chatInput, time: Date.now() }], chatInput: "" });
+    const { chatInput: text } = this.state;
+    if (text.trim()) {
+      saveChats(UserInfo, text);
+      socket.emit('chat', { author: UserInfo, text, time: Date.now() });
+      this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, time: Date.now() }], chatInput: "" });
     }
     this.chatInputRef.focus();
     event.preventDefault();
@@ -109,6 +117,30 @@ class Chat extends PureComponent {
     this.setState({ chatIsOpen: !this.state.chatIsOpen });
   }
 
+  renderMsgList = () => {
+    return (
+      <div>
+        {this.state.dbMsgList.map(this.msgListCallback)}
+        {this.state.messageList.map(this.msgListCallback)}
+      </div>
+    );
+  }
+
+  msgListCallback = (msg, index) => {
+    if (msg.author === UserInfo) {
+      return (
+        <div key={index} style={styles.myMsgStyle}>
+          <MsgText text={msg.text} />
+        </div>
+      );
+    }
+    return (
+      <div key={index} style={Object.assign({}, styles.anonymousMsgStyle, { color: this.state.userTextColor })}>
+        <MsgText text={msg.text} />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -118,20 +150,7 @@ class Chat extends PureComponent {
               익명 채팅
             </div>
             <div style={styles.messageContainerStyle} ref={(el) => { this.messagesEnd = el; }}>
-              {this.state.messageList.map((msg, index) => {
-                if (msg.author === "me") {
-                  return (
-                    <div key={index} style={styles.myMsgStyle}>
-                      <MsgText text={msg.text} />
-                    </div>
-                  );
-                }
-                return (
-                  <div key={index} style={Object.assign({}, styles.anonymousMsgStyle, { color: this.state.userTextColor })}>
-                    <MsgText text={msg.text} />
-                  </div>
-                );
-              })}
+              {this.renderMsgList()}
             </div>
             <form onSubmit={this.handleSendBtn} style={styles.formStyle}>
               <input ref={(el) => { this.chatInputRef = el; }} onChange={this.handleChatInput} value={this.state.chatInput} style={styles.chatInputStyle} autoFocus />
