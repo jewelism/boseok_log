@@ -29,7 +29,7 @@ class ArticleListPage extends PureComponent {
     this.setState({ uri, title, article_list, showCategory });
   }
 
-  onClickItem = item => this.setState({ showArticle: true, selectedArticle: item })
+  onClickItem = item => this.setState({ showArticle: true, selectedArticle: item });
 
   closeArticle = () => this.setState({ showArticle: false });
 

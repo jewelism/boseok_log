@@ -148,8 +148,8 @@ class Chat extends PureComponent {
     const { chatInput: text } = this.state; //const text = this.state.chatInput
     if (text.trim()) { //remove blank and if not blank
       saveChats(UserInfo, text); //call save chat api
-      socket.emit('chat', { author: UserInfo, text, time: Date.now() });  //defined socket data object
-      this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, time: Date.now() }], chatInput: "" });
+      socket.emit('chat', { author: UserInfo, text, date: new Date() });  //defined socket data object
+      this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, date: new Date() }], chatInput: "" });
     }
     this.chatInputRef.focus();
     event.preventDefault();
@@ -172,13 +172,13 @@ class Chat extends PureComponent {
     if (msg.author === UserInfo) {
       return (
         <div key={index} style={styles.myMsgStyle}>
-          <MsgText text={msg.text} />
+          <MsgText msg={msg} />
         </div>
       );
     }
     return (
       <div key={index} style={Object.assign({}, styles.anonymousMsgStyle, { color: this.state.userTextColor })}>
-        <MsgText text={msg.text} />
+        <MsgText msg={msg} />
       </div>
     );
   }
@@ -230,13 +230,14 @@ class Chat extends PureComponent {
 }
 
 function MsgText(props) {
+  
   return (
     <div style={styles.msgTextContainer}>
       <span style={styles.msgText}>
-        {props.text}
+        {props.msg.text}
       </span>
       <span style={styles.messageInfoTooltip}>
-        {moment(props.time).fromNow()}
+        {moment(props.msg.date).fromNow()}
       </span>
     </div>
   );
