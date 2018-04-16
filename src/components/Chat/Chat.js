@@ -87,6 +87,7 @@ class Chat extends PureComponent {
     };
     this.chatCount = 0;
     this.chatObserveTimer = null;
+    this.rerenderTimer = null;
   }
 
   componentDidMount() {
@@ -111,6 +112,16 @@ class Chat extends PureComponent {
         this.setState({ snackbarIsOpen: true }); //new message arrived alert
       }
     });
+    this.rerenderTimerFunc();
+  }
+
+  componentWillUnmount(){
+    clearTimeout(this.rerenderTimer);
+  }
+
+  rerenderTimerFunc = () => {
+    this.forceUpdate();
+    this.rerenderTimer = setTimeout(this.rerenderTimerFunc, 60000);
   }
 
   scrollToBottom = () => {
