@@ -21,7 +21,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(39, 39, 39, 0.2)'
+    backgroundColor: 'rgba(39, 39, 39, 0.2)',
   },
   containerStyle: {
     position: 'fixed',
@@ -149,7 +149,7 @@ class Chat extends PureComponent {
     return (
       <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}>
         {this.state.chatIsOpen &&
-          <Paper zDepth={3} style={styles.containerStyle}>
+          <Paper zDepth={3} style={styles.containerStyle} onClick={e => e.stopPropagation()}>
             <div style={styles.titleStyle}>
               익명 채팅
             </div>
