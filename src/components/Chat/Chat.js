@@ -139,19 +139,19 @@ class Chat extends PureComponent {
   }
 
   handleSendBtn = (event) => {
-    this.chatCount++;
-    if (this.chatCount > 5) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
-      this.setState({ disableChatSubmit: true });
-      event.preventDefault();
-      return false;
-    }
     const { chatInput: text } = this.state; //const text = this.state.chatInput
     if (text.trim()) { //remove blank and if not blank
+      this.chatCount++;
+      if (this.chatCount > 5) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
+        this.setState({ disableChatSubmit: true });
+        event.preventDefault();
+        return false;
+      }
       saveChats(UserInfo, text); //call save chat api
       socket.emit('chat', { author: UserInfo, text, date: new Date() });  //defined socket data object
       this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, date: new Date() }], chatInput: "" });
+      this.chatInputRef.focus();
     }
-    this.chatInputRef.focus();
     event.preventDefault();
   }
 
@@ -230,7 +230,6 @@ class Chat extends PureComponent {
 }
 
 function MsgText(props) {
-  
   return (
     <div style={styles.msgTextContainer}>
       <span style={styles.msgText}>
@@ -238,6 +237,7 @@ function MsgText(props) {
       </span>
       <span style={styles.messageInfoTooltip}>
         {moment(props.msg.date).fromNow()}
+        {/* {moment(props.msg.date).format("LLL")} */}
       </span>
     </div>
   );
