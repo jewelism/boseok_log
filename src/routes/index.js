@@ -7,6 +7,7 @@ import AboutPage from '../components/About/AboutPage'
 import TechIndex from '../components/Tech'
 import ArticleListPage from '../components/Article/ArticleListPage'
 import MyAppPage from '../components/MyApp/MyAppPage'
+import WriteArticle from '../components/WriteArticle/WriteAritcle';
 
 export * from './routes4m'
 
@@ -45,6 +46,10 @@ export const routes = [
     path: TALK_URI,
     component: ArticleListPage,
   },
+  {
+    path: '/post',
+    component: WriteArticle
+  }
 ];
 
 export const RouteWithSubRoutes = route => (

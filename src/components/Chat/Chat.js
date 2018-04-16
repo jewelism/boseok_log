@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 
+import moment from 'moment';
 import Paper from 'material-ui/Paper';
 import SendIcon from 'material-ui/svg-icons/content/send';
 import InfoIcon from 'material-ui/svg-icons/action/info';
@@ -39,16 +40,29 @@ const styles = {
     fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15
   },
   infoIconStyle: isMobile() ? { width: 40, height: 40 } : { width: 25, height: 25 },
-  infoTooltip: { position: 'absolute', top: 50, fontSize: isMobile() ? 20 : 10, color: '#FFF', backgroundColor: 'black', padding: 5 },
+  infoTooltip: {
+    position: 'absolute', top: 50,
+    fontSize: isMobile() ? 20 : 10, color: '#FFF', backgroundColor: 'black', padding: 5, zIndex: 1000
+  },
   messageContainerStyle: {
-    height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 20, paddingRight: 20,
+    height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 15, paddingRight: 7,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
+  },
+  msgTextContainer: { marginBottom: 12 },
+  msgText: {
+    backgroundColor: '#FFF', padding: 5, paddingRight: 10, paddingLeft: 10, marginRight: 5, borderRadius: 5
+  },
+  messageInfoTooltip: {
+    position: 'relative', top: 8,
+    fontSize: isMobile() ? 13 : 6, color: 'black',
   },
   formStyle: {
     position: 'absolute', bottom: 10, width: '100%', height: formHeight,
     display: 'flex', alignItems: 'center', justifyContent: 'center'
   },
-  chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', paddingLeft: 5, fontSize: isMobile() ? 35 : 16 },
+  chatInputStyle: {
+    width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', paddingLeft: 5, fontSize: isMobile() ? 35 : 16
+  },
   sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
   sendBtnDisabledStyle: { width: '15%', height: '100%', borderRadius: 10, backgroundColor: 'red' },
   myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
@@ -106,6 +120,7 @@ class Chat extends PureComponent {
   }
 
   componentDidUpdate() {
+    this.scrollToBottom();
     if (this.state.disableChatSubmit) { //if chat submit button disabled
       if (!this.chatObserveTimer) { //if no timer
         this.chatObserveTimer = setTimeout(() => { //set timer
@@ -115,7 +130,6 @@ class Chat extends PureComponent {
         }, 2000);
       }
     }
-    this.scrollToBottom();
   }
 
   handleChatInput = (e) => {
@@ -217,7 +231,14 @@ class Chat extends PureComponent {
 
 function MsgText(props) {
   return (
-    <div style={{ backgroundColor: '#FFF', padding: 5, paddingRight: 10, paddingLeft: 10, borderRadius: 5 }}>{props.text}</div>
+    <div style={styles.msgTextContainer}>
+      <span style={styles.msgText}>
+        {props.text}
+      </span>
+      <span style={styles.messageInfoTooltip}>
+        {moment(props.time).fromNow()}
+      </span>
+    </div>
   );
 }
 
