@@ -34,21 +34,28 @@ const styles = {
     opacity: 0.98,
     borderRadius: 15,
   },
-  titleStyle: { display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 },
+  titleStyle: {
+    display: 'flex', justifyContent: 'center', alignItems: 'center',
+    fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15
+  },
   infoIconStyle: isMobile() ? { width: 40, height: 40 } : { width: 25, height: 25 },
   infoTooltip: { position: 'absolute', top: 50, fontSize: isMobile() ? 20 : 10, color: '#FFF', backgroundColor: 'black', padding: 5 },
   messageContainerStyle: {
     height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 20, paddingRight: 20,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
   },
-  formStyle: { position: 'absolute', bottom: 10, width: '100%', height: formHeight, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  formStyle: {
+    position: 'absolute', bottom: 10, width: '100%', height: formHeight,
+    display: 'flex', alignItems: 'center', justifyContent: 'center'
+  },
   chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', paddingLeft: 5, fontSize: isMobile() ? 35 : 16 },
   sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
+  sendBtnDisabledStyle: { width: '15%', height: '100%', borderRadius: 10, backgroundColor: 'red' },
   myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
   anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 }
 };
 
-const UserInfo = navigator.userAgent;
+const UserInfo = navigator.userAgent; //Determine whether you sent me a chat or someone else
 
 class Chat extends PureComponent {
 
@@ -62,33 +69,32 @@ class Chat extends PureComponent {
       userTextColor: '#272727',
       snackbarIsOpen: false,
       isChatInfoOpen: false,
+      disableChatSubmit: false,
     };
+    this.chatCount = 0;
+    this.chatObserveTimer = null;
   }
 
   componentDidMount() {
-    getChats()
+    this.scrollToBottom();
+    getChats() //get chatting logs in DB
       .then(dbMsgList => this.setState({ dbMsgList }));
 
-    this.scrollToBottom();
-    try {
-      getUserIp()
-        .then((data) => {
-          if (data.ip && data.ip.substr) {
-            const ipArr = data.ip.split(".");
-            const userTextColor = `#2${Math.abs(parseInt(ipArr[0], 10) + parseInt(ipArr[3], 10) - 1000)}27`;
-            this.setState({ userTextColor });
-          }
-        })
-    } catch (err) {
-
-    }
+    getUserIp() //user ip => user chat text color
+      .then((data) => {
+        if (data.ip && data.ip.substr) {
+          const ipArr = data.ip.split(".");
+          const userTextColor = `#2${Math.abs(parseInt(ipArr[0], 10) + parseInt(ipArr[3], 10) - 1000)}27`;
+          this.setState({ userTextColor });
+        }
+      });
 
     socket.on('chat', (data) => {
       // console.log(socket.id);
       const message = data;
-      this.setState({ messageList: [...this.state.messageList, message] });
+      this.setState({ messageList: [...this.state.messageList, message] }); //append message obj
       if (!this.state.chatIsOpen) {
-        this.setState({ snackbarIsOpen: true });
+        this.setState({ snackbarIsOpen: true }); //new message arrived alert
       }
     });
   }
@@ -100,20 +106,35 @@ class Chat extends PureComponent {
   }
 
   componentDidUpdate() {
+    if (this.state.disableChatSubmit) { //if chat submit button disabled
+      if (!this.chatObserveTimer) { //if no timer
+        this.chatObserveTimer = setTimeout(() => { //set timer
+          this.chatCount = 0;
+          this.setState({ disableChatSubmit: false }); //free
+          this.chatObserveTimer = null; //clear timer
+        }, 2000);
+      }
+    }
     this.scrollToBottom();
   }
 
   handleChatInput = (e) => {
-    if (e.target.value.length < 25) {
+    if (e.target.value.length < 25) { //max 24 chars
       this.setState({ chatInput: e.target.value });
     }
   }
 
   handleSendBtn = (event) => {
-    const { chatInput: text } = this.state;
-    if (text.trim()) {
-      saveChats(UserInfo, text);
-      socket.emit('chat', { author: UserInfo, text, time: Date.now() });
+    this.chatCount++;
+    if (this.chatCount > 5) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
+      this.setState({ disableChatSubmit: true });
+      event.preventDefault();
+      return false;
+    }
+    const { chatInput: text } = this.state; //const text = this.state.chatInput
+    if (text.trim()) { //remove blank and if not blank
+      saveChats(UserInfo, text); //call save chat api
+      socket.emit('chat', { author: UserInfo, text, time: Date.now() });  //defined socket data object
       this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, time: Date.now() }], chatInput: "" });
     }
     this.chatInputRef.focus();
@@ -124,7 +145,7 @@ class Chat extends PureComponent {
 
   onClickChatToggleBtn = () => this.setState({ chatIsOpen: !this.state.chatIsOpen });
 
-  renderMsgList = () => {
+  renderMsgList = () => { //chat message list
     return (
       <div>
         {this.state.dbMsgList.map(this.msgListCallback)}
@@ -133,7 +154,7 @@ class Chat extends PureComponent {
     );
   }
 
-  msgListCallback = (msg, index) => {
+  msgListCallback = (msg, index) => { //chat message list map callback function
     if (msg.author === UserInfo) {
       return (
         <div key={index} style={styles.myMsgStyle}>
@@ -148,18 +169,18 @@ class Chat extends PureComponent {
     );
   }
 
-  stopPropagation = e => e.stopPropagation();
+  stopPropagation = e => e.stopPropagation(); //Prevent events from being delivered to parents(?)
 
   toggleChatInfo = () => this.setState({ isChatInfoOpen: !this.state.isChatInfoOpen });
 
   render() {
     return (
-      <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}>
+      <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}> {/* overlay */}
         {this.state.chatIsOpen &&
           <Paper zDepth={3} style={styles.containerStyle} onClick={this.stopPropagation}>
             <div style={styles.titleStyle}>
               익명 채팅 <InfoIcon onMouseOver={this.toggleChatInfo} onMouseOut={this.toggleChatInfo} style={styles.infoIconStyle} />
-              {this.state.isChatInfoOpen &&
+              {this.state.isChatInfoOpen && //tooltip
                 <div style={styles.infoTooltip}>
                   브라우저의 환경이 같다면 같은 유저로 판단합니다 ^^;<br />
                   추후 변경 될 수 있습니다!
@@ -169,9 +190,15 @@ class Chat extends PureComponent {
             <div style={styles.messageContainerStyle} ref={(el) => { this.messagesEnd = el; }}>
               {this.renderMsgList()}
             </div>
-            <form onSubmit={this.handleSendBtn} style={styles.formStyle}>
-              <input ref={(el) => { this.chatInputRef = el; }} onChange={this.handleChatInput} value={this.state.chatInput} style={styles.chatInputStyle} autoFocus />
-              <button type="submit" style={styles.sendBtnStyle}><SendIcon /></button>
+            <form onSubmit={this.handleSendBtn} style={styles.formStyle}> {/* message input form */}
+              <input
+                ref={(el) => { this.chatInputRef = el; }}
+                onChange={this.handleChatInput}
+                value={this.state.chatInput}
+                style={styles.chatInputStyle}
+                autoFocus
+              />
+              <button type="submit" style={this.state.disableChatSubmit ? styles.sendBtnDisabledStyle : styles.sendBtnStyle} disabled={this.state.disableChatSubmit}><SendIcon /></button>
             </form>
           </Paper>
         }
