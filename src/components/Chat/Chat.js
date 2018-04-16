@@ -12,13 +12,23 @@ import { getUserIp, getChats, saveChats } from '../../actions';
 
 const socket = socketIOClient("https://boseok.me:3443");
 
+const containerHeight = isMobile() ? 700 : 400;
+const formHeight = isMobile() ? 50 : 30;
 const styles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(39, 39, 39, 0.2)'
+  },
   containerStyle: {
     position: 'fixed',
     bottom: isMobile() ? 200 : 140,
     right: isMobile() ? 80 : 50,
     backgroundColor: '#F0F0F0',
-    width: isMobile() ? '65%' : 400, height: isMobile() ? '50%' : 400,
+    width: isMobile() ? '65%' : 400, height: containerHeight,
     display: 'flex',
     flexDirection: 'column',
     opacity: 0.98,
@@ -26,11 +36,11 @@ const styles = {
   },
   titleStyle: { display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 },
   messageContainerStyle: {
-    height: isMobile() ? '79%' : '74%', paddingTop: 20, paddingLeft: 20, paddingRight: 20,
+    height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 20, paddingRight: 20,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
   },
-  formStyle: { position: 'absolute', bottom: 10, width: '100%', height: '9%', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', fontSize: isMobile() ? 35 : 16 },
+  formStyle: { position: 'absolute', bottom: 10, width: '100%', height: formHeight, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  chatInputStyle: { width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', paddingLeft: 5, fontSize: isMobile() ? 35 : 16 },
   sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
   myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
   anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 }
@@ -137,7 +147,7 @@ class Chat extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}>
         {this.state.chatIsOpen &&
           <Paper zDepth={3} style={styles.containerStyle}>
             <div style={styles.titleStyle}>
