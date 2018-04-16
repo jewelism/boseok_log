@@ -32,10 +32,12 @@ class WriteArticle extends PureComponent {
   handleTitleInput = e => this.setState({ titleInput: e.target.value });
   handleContentInput = e => this.setState({ contentInput: e.target.value });
   postArticle = () => {
+    const title = this.state.titleInput.replace(/'/gi, "\\'");
+    const content = this.state.contentInput.replace(/'/gi, "\\'");
     const body = {
       category: this.state.selectedCategory,
-      title: this.state.titleInput,
-      content: this.state.contentInput
+      title,
+      content
     };
     saveArticles(body)
       .then(({ status, msg }) => alert(msg, status));
