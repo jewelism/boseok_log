@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 
-
 import Paper from 'material-ui/Paper';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import InfoIcon from 'material-ui/svg-icons/action/info';
 import Snackbar from 'material-ui/Snackbar';
 import socketIOClient from 'socket.io-client';
 
@@ -34,7 +34,9 @@ const styles = {
     opacity: 0.98,
     borderRadius: 15,
   },
-  titleStyle: { display: 'flex', justifyContent: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 },
+  titleStyle: { display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15 },
+  infoIconStyle: isMobile() ? { width: 40, height: 40 } : { width: 25, height: 25 },
+  infoTooltip: { position: 'absolute', top: 50, fontSize: isMobile() ? 20 : 10, color: '#FFF', backgroundColor: 'black', padding: 5 },
   messageContainerStyle: {
     height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 20, paddingRight: 20,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
@@ -58,7 +60,8 @@ class Chat extends PureComponent {
       dbMsgList: [],
       messageList: [],
       userTextColor: '#272727',
-      snackbarIsOpen: false
+      snackbarIsOpen: false,
+      isChatInfoOpen: false,
     };
   }
 
@@ -145,13 +148,23 @@ class Chat extends PureComponent {
     );
   }
 
+  stopPropagation = e => e.stopPropagation();
+
+  toggleChatInfo = () => this.setState({ isChatInfoOpen: !this.state.isChatInfoOpen });
+
   render() {
     return (
       <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}>
         {this.state.chatIsOpen &&
-          <Paper zDepth={3} style={styles.containerStyle} onClick={e => e.stopPropagation()}>
+          <Paper zDepth={3} style={styles.containerStyle} onClick={this.stopPropagation}>
             <div style={styles.titleStyle}>
-              익명 채팅
+              익명 채팅 <InfoIcon onMouseOver={this.toggleChatInfo} onMouseOut={this.toggleChatInfo} style={styles.infoIconStyle} />
+              {this.state.isChatInfoOpen &&
+                <div style={styles.infoTooltip}>
+                  브라우저의 환경이 같다면 같은 유저로 판단합니다 ^^;<br />
+                  추후 변경 될 수 있습니다!
+                </div>
+              }
             </div>
             <div style={styles.messageContainerStyle} ref={(el) => { this.messagesEnd = el; }}>
               {this.renderMsgList()}
