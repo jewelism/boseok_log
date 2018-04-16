@@ -2,7 +2,7 @@ import { getArticles } from '../../actions'
 
 import { TECH_CONSTANTS, NAMES, TECH, TECH_TITLE, LASTEST } from '../../constants';
 
-async function getFilteredList(category) {
+async function getFilteredList(category) { //get all articles from server, and filter to category
   const article_list = await getArticles() || [];
   if (category) {
     return article_list.filter((article) => {
@@ -10,7 +10,7 @@ async function getFilteredList(category) {
         let flag = false;
         // eslint-disable-next-line
         TECH_CONSTANTS.map(item => {
-          if (item === article.category){
+          if (item === article.category) {
             flag = true;
           }
         });
@@ -24,7 +24,7 @@ async function getFilteredList(category) {
   }
 }
 
-export async function getArticlePageInfo(pathname) {
+export async function getArticlePageInfo(pathname) { //set uri, title
   let uri = pathname.substr(pathname.lastIndexOf('/') + 1, pathname.length);
   let title = NAMES[uri];
   if (uri === 'highlight') {
@@ -34,5 +34,9 @@ export async function getArticlePageInfo(pathname) {
     title = LASTEST;
   }
   const article_list = await getFilteredList(uri) || [];
-  return { uri, title, article_list };
+  let showCategory = false; //decide whether to show category or not
+  if (!uri || uri === 'tech') { 
+    showCategory = true;
+  }
+  return { uri, title, article_list, showCategory };
 }

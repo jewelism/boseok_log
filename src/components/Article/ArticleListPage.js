@@ -18,14 +18,15 @@ class ArticleListPage extends PureComponent {
       article_list: [],
       title: null,
       showArticle: false,
-      selectedArticle: {}
+      selectedArticle: {},
+      showCategory: false,
     };
   }
 
   async componentDidMount() {
     const { pathname } = this.props.location;
-    const { uri, title, article_list } = await getArticlePageInfo(pathname)
-    this.setState({ uri, title, article_list });
+    const { uri, title, article_list, showCategory } = await getArticlePageInfo(pathname);
+    this.setState({ uri, title, article_list, showCategory });
   }
 
   onClickItem = item => this.setState({ showArticle: true, selectedArticle: item })
@@ -46,8 +47,12 @@ class ArticleListPage extends PureComponent {
                 >
                   <span>
                     <span className="article-list-table-td-id">{index + 1}.</span>
-                    <span className="article-list-table-td">{NAMES[article.category]}</span>
-                    <span className="article-list-table-td">-</span>
+                    {this.state.showCategory &&
+                      <span>
+                        <span className="article-list-table-td">{NAMES[article.category]}</span>
+                        <span className="article-list-table-td">-</span>
+                      </span>
+                    }
                     <span className="article-list-table-td">{article.title}</span>
                   </span>
                   <div className="article-list-table-td">{moment(article.date).fromNow()}</div>
