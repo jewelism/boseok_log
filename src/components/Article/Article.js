@@ -14,7 +14,6 @@ function Article(props) {
   //     keyboardFocused={true}
   //   />,
   // ];
-
   const date = props.item.date ? props.item.date : new Date();
   const isMobile = props.forMobile;
   return (
@@ -40,7 +39,7 @@ function Article(props) {
       <div style={{ display: 'flex', marginTop: 20, marginBottom: 35, fontWeight: 'bold', justifyContent: 'flex-end' }}>
         {moment(date).format("LLL")}
       </div>
-      {props.item.content && props.item.content.split('\n').map((content, index) => {
+      {props.item.content && props.item.content.replace(/ /g, "\v").split('\n').map((content, index) => {
         return (
           <div key={index}>
             {content}<br />
