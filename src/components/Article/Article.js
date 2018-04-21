@@ -1,8 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import moment from 'moment'
+import moment from 'moment';
 import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
+
+const styles = {
+  date: { display: 'flex', marginTop: 20, marginBottom: 35, fontWeight: 'bold', justifyContent: 'flex-end' },
+  whiteSpace: { marginRight: 5 },
+};
 
 function Article(props) {
   // const actions = [
@@ -29,20 +34,22 @@ function Article(props) {
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: isMobile ? 38 : 20,
-        padding: isMobile ? 50 : 20,
+        padding: isMobile ? 50 : 20
       }}
-      bodyStyle={{
-        fontSize: isMobile ? 30 : 15,
-      }}
+      bodyStyle={{ fontSize: isMobile ? 30 : 15 }}
       contentStyle={{ width: isMobile ? '77%' : '60%' }}
     >
-      <div style={{ display: 'flex', marginTop: 20, marginBottom: 35, fontWeight: 'bold', justifyContent: 'flex-end' }}>
+      <div style={styles.date}>
         {moment(date).format("LLL")}
       </div>
-      {props.item.content && props.item.content.replace(/ /g, "\v").split('\n').map((content, index) => {
+      {props.item.content && props.item.content.split("\n").map((content, index) => {
         return (
           <div key={index}>
-            {content}<br />
+            {content.split(" ").map((c, i) => {
+              return (
+                <span style={styles.whiteSpace} key={i}>{`${c} `}</span>
+              )
+            })}<br />
           </div>
         )
       })}

@@ -153,7 +153,7 @@ class Chat extends PureComponent {
     const { chatInput: text } = this.state; //const text = this.state.chatInput
     if (text.trim()) { //remove blank and if not blank
       this.chatCount++;
-      if (this.chatCount > 5) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
+      if (this.chatCount > 10) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
         this.setState({ disableChatSubmit: true });
         event.preventDefault();
         return false;
