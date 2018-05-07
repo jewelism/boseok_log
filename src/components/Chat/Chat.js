@@ -106,7 +106,6 @@ class Chat extends PureComponent {
       });
 
     socket.on('chat', (data) => {
-      // console.log(socket.id);
       const message = data;
       this.setState({ messageList: [...this.state.messageList, message] }); //append message obj
       if (!this.state.chatIsOpen) {
@@ -160,8 +159,9 @@ class Chat extends PureComponent {
         return false;
       }
       saveChats(UserInfo, text, ip); //call save chat api
-      socket.emit('chat', { author: UserInfo, text, date: new Date() });  //defined socket data object
-      this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, date: new Date() }], chatInput: "" });
+      const msgObj = { author: UserInfo, text, ip, date: new Date() };
+      socket.emit('chat', msgObj);  //defined socket data object
+      this.setState({ messageList: [...this.state.messageList, msgObj], chatInput: "" });
       this.chatInputRef.focus();
     }
     event.preventDefault();
@@ -181,7 +181,7 @@ class Chat extends PureComponent {
   }
 
   msgListCallback = (msg, index) => { //chat message list map callback function
-    if (msg.author === UserInfo) {
+    if (msg.ip === this.state.ip) {
       return (
         <div key={index} style={styles.myMsgStyle}>
           <MsgText msg={msg} />
@@ -208,7 +208,7 @@ class Chat extends PureComponent {
               익명 채팅 <InfoIcon onMouseOver={this.toggleChatInfo} onMouseOut={this.toggleChatInfo} style={styles.infoIconStyle} />
               {this.state.isChatInfoOpen && //tooltip
                 <div style={styles.infoTooltip}>
-                  브라우저의 환경이 같다면 같은 유저로 판단합니다 ^^;<br />
+                  ip가 같다면 동일한 유저로 판단합니다 ^^;<br />
                   추후 변경 될 수 있습니다!
                 </div>
               }
