@@ -22,7 +22,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(39, 39, 39, 0.2)',
+    backgroundColor: 'rgba(39, 39, 39, 0.5)',
   },
   containerStyle: {
     position: 'fixed',
@@ -84,6 +84,7 @@ class Chat extends PureComponent {
       snackbarIsOpen: false,
       isChatInfoOpen: false,
       disableChatSubmit: false,
+      ip: null,
     };
     this.chatCount = 0;
     this.chatObserveTimer = null;
@@ -100,7 +101,7 @@ class Chat extends PureComponent {
         if (data.ip && data.ip.substr) {
           const ipArr = data.ip.split(".");
           const userTextColor = `#2${Math.abs(parseInt(ipArr[0], 10) + parseInt(ipArr[3], 10) - 1000)}27`;
-          this.setState({ userTextColor });
+          this.setState({ userTextColor, ip: data.ip });
         }
       });
 
@@ -115,7 +116,7 @@ class Chat extends PureComponent {
     this.rerenderTimerFunc();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearTimeout(this.rerenderTimer);
   }
 
@@ -150,7 +151,7 @@ class Chat extends PureComponent {
   }
 
   handleSendBtn = (event) => {
-    const { chatInput: text } = this.state; //const text = this.state.chatInput
+    const { chatInput: text, ip } = this.state; //const text = this.state.chatInput
     if (text.trim()) { //remove blank and if not blank
       this.chatCount++;
       if (this.chatCount > 10) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
@@ -158,7 +159,7 @@ class Chat extends PureComponent {
         event.preventDefault();
         return false;
       }
-      saveChats(UserInfo, text); //call save chat api
+      saveChats(UserInfo, text, ip); //call save chat api
       socket.emit('chat', { author: UserInfo, text, date: new Date() });  //defined socket data object
       this.setState({ messageList: [...this.state.messageList, { author: UserInfo, text, date: new Date() }], chatInput: "" });
       this.chatInputRef.focus();

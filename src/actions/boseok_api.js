@@ -42,14 +42,14 @@ export const getChats = () => {
   })
 }
 
-export const saveChats = (author, text) => {
+export const saveChats = (author, text, ip) => {
   return new Promise((resolve) => {
     fetch(`${BASE_URI}/chats`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ author, text })
+      body: JSON.stringify({ author, text, ip })
     })
       .then(response => response.json())
       .then(responseJson => resolve(responseJson))
