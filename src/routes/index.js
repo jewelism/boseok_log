@@ -7,7 +7,7 @@ import AboutPage from '../components/About/AboutPage'
 import TechIndex from '../components/Tech'
 import ArticleListPage from '../components/Article/ArticleListPage'
 import MyAppPage from '../components/MyApp/MyAppPage'
-import WriteArticle from '../components/WriteArticle/WriteAritcle';
+import SaveArticle from '../components/SaveArticle/SaveArticle';
 
 export * from './routes4m'
 
@@ -47,9 +47,13 @@ export const routes = [
     component: ArticleListPage,
   },
   {
+    path: '/post/:id',
+    component: SaveArticle
+  },
+  {
     path: '/post',
-    component: WriteArticle
-  }
+    component: SaveArticle
+  },
 ];
 
 export const RouteWithSubRoutes = route => (

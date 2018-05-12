@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { saveArticles } from '../../actions';
+import { saveArticles, getArticleById } from '../../actions';
 import { NAMES } from '../../constants';
 
 const containerStyle = {
@@ -18,15 +18,30 @@ const containerStyle = {
 const style = {
   width: '100%'
 }
-class WriteArticle extends PureComponent {
+class SaveArticle extends PureComponent {
   constructor(props) {
     super(props);
 
+    const articleId = this.props.match.params.id ? this.props.match.params.id : null;
     this.state = {
       selectedCategory: 'js',
       titleInput: '',
       contentInput: '',
+      articleId
     };
+  }
+
+  componentDidMount() {
+    if (this.state.articleId) {
+      getArticleById(this.state.articleId)
+        .then((res) => {
+          this.setState({
+            selectedCategory: res.category,
+            titleInput: res.title,
+            contentInput: res.content
+          });
+        })
+    }
   }
 
   handleChange = (event, index, selectedCategory) => this.setState({ selectedCategory });
@@ -40,7 +55,7 @@ class WriteArticle extends PureComponent {
       title,
       content
     };
-    saveArticles(body)
+    saveArticles(body, this.state.articleId)
       .then(({ status, msg }) => alert(msg, status));
   }
 
@@ -54,7 +69,7 @@ class WriteArticle extends PureComponent {
         >
           {Object.keys(NAMES).map((key, index) => {
             return (
-              <MenuItem value={key} primaryText={NAMES[key]} key={index}/>
+              <MenuItem value={key} primaryText={NAMES[key]} key={index} />
             );
           })}
         </SelectField>
@@ -81,4 +96,4 @@ class WriteArticle extends PureComponent {
   }
 }
 
-export default WriteArticle;
+export default SaveArticle;
