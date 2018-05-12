@@ -22,7 +22,7 @@ function About(props) {
   return (
     <div className={`about${className}-container`}>
       <div className={`about${className}-name`}>Jung Boseok</div>
-      <div className={`about${className}-job`}>Developer</div>
+      <div className={`about${className}-job`}>Front-end Engineer</div>
       <div className={`about${className}-row`}>
         <div className={`about${className}-left-wrapper`}>
           <div className={`about${className}-subtitle`}>Contact</div>
@@ -51,6 +51,53 @@ function About(props) {
             </div>
           )
         })}
+      </div>
+      <div className={`about${className}-graph-wrapper`}>
+        <div className={`about${className}-subtitle`}>Experience</div>
+        <div>2017.10.23 ~ 2017.12.22</div>
+        <div>스타트업 인턴</div>
+        <div>react-native 모바일 개발</div>
+        <br />
+        <div>2018.05.02 ~</div>
+        <div>스마일게이트 인턴</div>
+        <div>vue.js 웹프론트 개발</div>
+      </div>
+      <div className={`about${className}-graph-wrapper`}>
+        <div className={`about${className}-subtitle`}>Interest in..</div>
+        <div>
+          <p>
+            Java를 시작으로 spring과 mybatis jpa ORM을 공부<br />
+            rest api를 구현해보며 api에 대한 이해도↑<br />
+            react.js로 플젝하며 프론트 입문<br />
+            백엔드보다 프론트에 관심이 많아짐<br />
+          </p>
+          <p>
+            프론트와 백엔드, 인프라까지 모두 혼자 작업하며<br />
+            각 파트에 대한 이해도↑<br />
+            aws, gcp, ncp의 인스턴스에 nginx를 올리고,<br />
+            가비아 서비스를 이용해서 도메인을 구입하고<br />
+            https를 설정하고 nodejs 백엔드를 pm2로 관리<br/>
+            하고 있는 웹이 현재 보고 계시는 boseok.me 입니다 ^^;<br/>
+          </p>
+          <p>
+            개발자라면 모바일앱정도는 개발해봐야지!라는 생각과 때마침 지인이 요청하여 react native로 모바일앱 개발<br />
+            <a href="https://play.google.com/store/apps/details?id=com.project_fiora">https://play.google.com/store/apps/details?id=com.project_fiora</a><br/>
+            이렇게 구현한 프로젝트 기반으로 스타트업에서 인턴경험
+          </p>
+          <p>
+            react, vue 위주의 frontend 공부를 하다가
+            너무 빠르게 js 생태계가 변하는 것을 느끼고,
+            프로젝트 성격에 맞춰서 프론트 프레임워크를 골라야 하는점,
+            한가지 프레임워크를 집중적으로 공부하는것에 대한 한계를 느끼고
+            프론트 프레임워크보다는 rxjs와 같은.. 어떤 프레임워크나 라이브러리에
+            적용할수있는.. 함수형 라이브러리에 관심이 많음<br/>
+          </p>
+          <p>
+            시간이 허락한다면 사내에서 혹은 오픈소스로 유용하게
+            사용하는 라이브러리를 개발하고싶음<br/>
+            단순 개발자가 아닌, 엔지니어가 되는게 목표
+          </p>
+        </div>
       </div>
     </div>
   )

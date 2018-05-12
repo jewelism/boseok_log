@@ -1,4 +1,5 @@
 const BASE_URI = 'https://boseok.me:3443';
+// const BASE_URI = 'http://127.0.0.1:3000';
 
 export const getArticles = () => {
   return new Promise((resolve) => {

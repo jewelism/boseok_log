@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { saveArticles } from '../../actions';
+import { NAMES } from '../../constants';
 
 const containerStyle = {
   display: 'flex',
@@ -51,11 +52,11 @@ class WriteArticle extends PureComponent {
           value={this.state.selectedCategory}
           onChange={this.handleChange}
         >
-          <MenuItem value={'js'} primaryText="Javascript" />
-          <MenuItem value={'react'} primaryText="React.js" />
-          <MenuItem value={'cloud'} primaryText="Cloud Server" />
-          <MenuItem value={'knowledge'} primaryText="Knowledge" />
-          <MenuItem value={'talk'} primaryText="Talk" />
+          {Object.keys(NAMES).map((key, index) => {
+            return (
+              <MenuItem value={key} primaryText={NAMES[key]} key={index}/>
+            );
+          })}
         </SelectField>
         <br />
         <TextField
