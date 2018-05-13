@@ -1,5 +1,6 @@
 .App {
   display: flex;
+  min-width: 1150px;
   /* width: 98vw;
   height: 98vh; */
 }
