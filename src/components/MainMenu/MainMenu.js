@@ -1,27 +1,27 @@
 import React, { PureComponent } from 'react';
 
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import SmartPhoneIcon from 'material-ui/svg-icons/hardware/smartphone';
 
-import { MENU_ITEMS } from '../../constants'
+import { MENU_ITEMS } from '../../constants';
 
-const BackGrayColor = { backgroundColor: 'rgba(39, 39, 39, 0.2)' }
-const BackNoColor = { backgroundColor: 'transparent' }
+const BackGrayColor = { backgroundColor: 'rgba(39, 39, 39, 0.2)' };
+const BackNoColor = { backgroundColor: 'transparent' };
 class MainMenu extends PureComponent {
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    const path = props.location.pathname || '/'
+    const path = props.location.pathname || '/';
     this.state = {
       path
     }
   }
 
   handleOnClick = (path) => {
-    this.setState({ path })
-    this.props.history.push(`${path}`)
+    this.setState({ path });
+    this.props.history.push(`${path}`);
   }
 
   menuItem = ({ index, item }) => {
@@ -33,7 +33,7 @@ class MainMenu extends PureComponent {
         leftIcon={item.icon}
         onClick={() => this.handleOnClick(item.uri)}
       />
-    )
+    );
   }
 
   render() {
@@ -51,21 +51,21 @@ class MainMenu extends PureComponent {
                 // primaryTogglesNestedList={true}
                 nestedItems={
                   item.nestedItems.map((innerItem, i) => {
-                    i += MENU_ITEMS.length
-                    return this.menuItem({ index: i, item: innerItem })
+                    i += MENU_ITEMS.length;
+                    return this.menuItem({ index: i, item: innerItem });
                   })
                 }
                 onClick={() => this.handleOnClick(item.uri)}
               />
             )
           } else {
-            return this.menuItem({ index, item })
+            return this.menuItem({ index, item });
           }
         })}
         <ListItem
           style={BackNoColor}
-          primaryText={"Mobile화면으로 보기"}
-          leftIcon={<SmartPhoneIcon/>}
+          primaryText={'Mobile로 보기'}
+          leftIcon={<SmartPhoneIcon />}
           onClick={this.props.toggleView}
         />
       </List>
@@ -73,4 +73,4 @@ class MainMenu extends PureComponent {
   }
 }
 
-export default withRouter(MainMenu)
+export default withRouter(MainMenu);
