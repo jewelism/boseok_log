@@ -5,7 +5,9 @@ import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
-  date: { display: 'flex', marginTop: 20, marginBottom: 35, fontWeight: 'bold', justifyContent: 'flex-end' },
+  row: { display: 'flex', justifyContent: 'space-between', marginTop: 20, marginBottom: 35 },
+  hidden: { color: '#FFF' },
+  date: { display: 'flex', fontWeight: 'bold', justifyContent: 'flex-end' },
   whiteSpace: { marginRight: 5 },
 };
 
@@ -39,8 +41,13 @@ function Article(props) {
       bodyStyle={{ fontSize: isMobile ? 30 : 15 }}
       contentStyle={{ width: isMobile ? '77%' : '60%' }}
     >
-      <div style={styles.date}>
-        {moment(date).format("LLL")}
+      <div style={styles.row}>
+        <div style={styles.hidden}>
+          {props.item.id}
+        </div>
+        <div style={styles.date}>
+          {moment(date).format("LLL")}
+        </div>
       </div>
       {props.item.content && props.item.content.split("\n").map((content, index) => {
         return (
