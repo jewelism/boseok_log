@@ -39,7 +39,7 @@ function Article(props) {
         padding: isMobile ? 50 : 20
       }}
       bodyStyle={{ fontSize: isMobile ? 30 : 15 }}
-      contentStyle={{ width: isMobile ? '77%' : '60%' }}
+      contentStyle={{ width: isMobile ? '77%' : '60%', minWidth: isMobile ? null : 700 }}
     >
       <div style={styles.row}>
         <div style={styles.hidden}>
