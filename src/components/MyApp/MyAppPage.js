@@ -15,7 +15,7 @@ function PortfolioItem(props) {
 function MyAppPage() {
   return (
     <div className="my-app-page-container">
-      <h2>Boseok Web Applications</h2>
+      <h2>Boseok Applications</h2>
       <div>참고 - boseok.me는 react.js로 구현</div>
       <br />
       <div className="my-app-page-item-wrapper">

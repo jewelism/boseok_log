@@ -16,6 +16,10 @@ const styles = {
     height: '100%',
     overflowY: 'auto',
   },
+  subheader: {
+    fontSize: '45px',
+    padding: '25px'
+  },
   fontSize: {
     fontSize: '35px',
   }
@@ -28,7 +32,7 @@ function MyAppPage4m() {
         cellHeight={300}
         style={styles.gridList}
       >
-        <Subheader style={{ fontSize: '45px', padding: '25px' }}>Boseok Web Applications</Subheader>
+        <Subheader style={styles.subheader}>Boseok Applications</Subheader>
         {PORTFOLIO_LIST.map((pf, index) => {
           return (
             <GridTile
@@ -40,7 +44,7 @@ function MyAppPage4m() {
               title={<b>{pf.display}</b>}
               titleBackground='gray'
               titleStyle={styles.fontSize}
-              // subtitle={<span>{pf.date}</span>}
+            // subtitle={<span>{pf.date}</span>}
             // actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
             >
               {/* <img src={tile.img} /> */}

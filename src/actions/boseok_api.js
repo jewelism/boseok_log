@@ -7,7 +7,7 @@ export const getArticles = () => {
       .then(response => response.json())
       .then(responseJson => resolve(responseJson.data))
       .catch(err => {
-        console.warn(err)
+        console.warn(err);
         resolve(false);
       });
   })
@@ -19,16 +19,15 @@ export const getArticleById = (id) => {
       .then(response => response.json())
       .then(responseJson => resolve(responseJson.data[0]))
       .catch(err => {
-        console.warn(err)
-        resolve(false)
+        console.warn(err);
+        resolve(false);
       });
   });
 }
 
 export const saveArticles = (body, articleId) => {
   return new Promise((resolve) => {
-    const URL = articleId ? `${BASE_URI}/articles/${articleId}` : `${BASE_URI}/articles`;
-    fetch(URL, {
+    fetch(articleId ? `${BASE_URI}/articles/${articleId}` : `${BASE_URI}/articles`, {
       method: articleId ? 'PUT' : 'POST',
       headers: {
         'Content-Type': 'application/json',
