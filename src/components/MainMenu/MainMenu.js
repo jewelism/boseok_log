@@ -4,18 +4,17 @@ import { withRouter } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import SmartPhoneIcon from 'material-ui/svg-icons/hardware/smartphone';
 
-import { MENU_ITEMS } from '../../constants';
+import { MENU_ITEMS, MOBILE_VIEW } from '../../constants';
 
 const BackGrayColor = { backgroundColor: 'rgba(39, 39, 39, 0.2)' };
 const BackNoColor = { backgroundColor: 'transparent' };
-class MainMenu extends PureComponent {
 
+class MainMenu extends PureComponent {
   constructor(props) {
     super(props);
 
-    const path = props.location.pathname || '/';
     this.state = {
-      path
+      path: props.location.pathname || '/'
     }
   }
 
@@ -64,7 +63,7 @@ class MainMenu extends PureComponent {
         })}
         <ListItem
           style={BackNoColor}
-          primaryText={'Mobile로 보기'}
+          primaryText={MOBILE_VIEW}
           leftIcon={<SmartPhoneIcon />}
           onClick={this.props.toggleView}
         />

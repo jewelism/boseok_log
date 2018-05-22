@@ -9,7 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 
-import { MENU_ITEMS } from '../../constants';
+import { MENU_ITEMS, PC_VIEW } from '../../constants';
 
 import './MainMenu4m.css';
 
@@ -31,7 +31,7 @@ class MainMenu4m extends PureComponent {
     this.props.history.push(`${path}`);
   }
 
-  renderMenuItem = (item) => <MenuItem className='mm4m-menu-item' onClick={() => this.handleRouter(item.uri)} key={item.uri}>{item.name}</MenuItem>
+  renderMenuItem = item => <MenuItem className='mm4m-menu-item' onClick={() => this.handleRouter(item.uri)} key={item.uri}>{item.name}</MenuItem>
 
   render() {
     return (
@@ -62,7 +62,7 @@ class MainMenu4m extends PureComponent {
             return this.renderMenuItem(item);
           })}
           <Divider inset={true} />
-          <MenuItem className='mm4m-menu-item' onClick={this.props.toggleView}>{'PC버전'}</MenuItem>
+          <MenuItem className='mm4m-menu-item' onClick={this.props.toggleView}>{PC_VIEW}</MenuItem>
         </Drawer>
       </div>
     )

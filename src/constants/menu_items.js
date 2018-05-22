@@ -21,28 +21,29 @@ export const KNOWLEDGE = 'knowledge';
 export const TALK = 'talk';
 
 export const JS = 'js';
+export const DP = 'dp';
 export const REACT = 'react';
 export const CLOUD = 'cloud';
 export const COOP = 'coop';
-export const DP = 'dp';
 // export const MAC = 'mac';
 
-export const TECH_CONSTANTS = [JS, REACT, CLOUD, COOP];
+export const TECH_CONSTANTS = [JS, DP, REACT, CLOUD, COOP];
 
 export const TECH_PREFIX = `/${TECH}`;
 export const JS_URI = `${TECH_PREFIX}/${JS}`;
+export const DP_URI = `${TECH_PREFIX}/${DP}`;
 export const REACT_URI = `${TECH_PREFIX}/${REACT}`;
 export const CLOUD_URI = `${TECH_PREFIX}/${CLOUD}`;
 export const COOP_URI = `${TECH_PREFIX}/${COOP}`;
-export const DP_URI = `${TECH_PREFIX}/${DP}`;
+
 // export const MAC_URI = `${TECH_PREFIX}/${MAC}`;
 
 export const NAMES = {
   [JS]: 'Javascript',
+  [DP]: 'Design Pattern',
   [REACT]: 'React.js',
   [CLOUD]: 'Cloud Server',
   [COOP]: '협업 가이드',
-  [DP]: 'Design Pattern',
   // [MAC]: 'Mac OS',
   [KNOWLEDGE]: 'Knowledge',
   [TALK]: 'Talk'
@@ -50,10 +51,10 @@ export const NAMES = {
 
 export const TECH_ITEMS = [
   { id: JS, uri: JS_URI, name: NAMES[JS], icon: <JsIcon /> },
+  { id: DP, uri: DP_URI, name: NAMES[DP], icon: <BuildIcon /> },
   { id: REACT, uri: REACT_URI, name: NAMES[REACT], icon: <Code /> },
   { id: CLOUD, uri: CLOUD_URI, name: NAMES[CLOUD], icon: <Cloud /> },
   { id: COOP, uri: COOP_URI, name: NAMES[COOP], icon: <Coop /> },
-  { id: DP, uri: DP_URI, name: NAMES[DP], icon: <BuildIcon /> }
   // { id: MAC, uri: MAC_URI, name: NAMES[MAC], icon: <Mac /> },
 ];
 
@@ -72,5 +73,7 @@ export const MENU_ITEMS = [
   { uri: TALK_URI, name: NAMES[TALK], icon: <SpeakerNotes /> }
 ];
 
+export const PC_VIEW = 'PC View';
+export const MOBILE_VIEW = 'Mobile View';
 
 
