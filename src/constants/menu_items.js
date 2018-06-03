@@ -21,18 +21,22 @@ export const KNOWLEDGE = 'knowledge';
 export const TALK = 'talk';
 
 export const JS = 'js';
+export const TS = 'ts';
 export const DP = 'dp';
 export const REACT = 'react';
+export const VUE = 'vue';
 export const CLOUD = 'cloud';
 export const COOP = 'coop';
 // export const MAC = 'mac';
 
-export const TECH_CONSTANTS = [JS, DP, REACT, CLOUD, COOP];
+export const TECH_CONSTANTS = [JS, TS, DP, REACT, VUE, CLOUD, COOP];
 
 export const TECH_PREFIX = `/${TECH}`;
 export const JS_URI = `${TECH_PREFIX}/${JS}`;
+export const TS_URI = `${TECH_PREFIX}/${TS}`;
 export const DP_URI = `${TECH_PREFIX}/${DP}`;
 export const REACT_URI = `${TECH_PREFIX}/${REACT}`;
+export const VUE_URI = `${TECH_PREFIX}/${VUE}`;
 export const CLOUD_URI = `${TECH_PREFIX}/${CLOUD}`;
 export const COOP_URI = `${TECH_PREFIX}/${COOP}`;
 
@@ -40,10 +44,12 @@ export const COOP_URI = `${TECH_PREFIX}/${COOP}`;
 
 export const NAMES = {
   [JS]: 'Javascript',
+  [TS]: 'Typescript',
   [DP]: 'Design Pattern',
   [REACT]: 'React.js',
+  [VUE]: 'Vue.js',
   [CLOUD]: 'Cloud Server',
-  [COOP]: '협업 가이드',
+  [COOP]: 'Co-op Guide',
   // [MAC]: 'Mac OS',
   [KNOWLEDGE]: 'Knowledge',
   [TALK]: 'Talk'
@@ -51,8 +57,10 @@ export const NAMES = {
 
 export const TECH_ITEMS = [
   { id: JS, uri: JS_URI, name: NAMES[JS], icon: <JsIcon /> },
+  { id: TS, uri: TS_URI, name: NAMES[TS], icon: <JsIcon /> },
   { id: DP, uri: DP_URI, name: NAMES[DP], icon: <BuildIcon /> },
   { id: REACT, uri: REACT_URI, name: NAMES[REACT], icon: <Code /> },
+  { id: VUE, uri: VUE_URI, name: NAMES[VUE], icon: <Code /> },
   { id: CLOUD, uri: CLOUD_URI, name: NAMES[CLOUD], icon: <Cloud /> },
   { id: COOP, uri: COOP_URI, name: NAMES[COOP], icon: <Coop /> },
   // { id: MAC, uri: MAC_URI, name: NAMES[MAC], icon: <Mac /> },
