@@ -27,6 +27,7 @@ class SaveArticle extends PureComponent {
       selectedCategory: 'js',
       titleInput: '',
       contentInput: '',
+      files: null,
       articleId
     };
   }
@@ -47,6 +48,7 @@ class SaveArticle extends PureComponent {
   handleChange = (event, index, selectedCategory) => this.setState({ selectedCategory });
   handleTitleInput = e => this.setState({ titleInput: e.target.value });
   handleContentInput = e => this.setState({ contentInput: e.target.value });
+  handleFileChange = e => this.setState({ files: e.target.files });
   postArticle = () => {
     const title = this.state.titleInput.replace(/'/gi, "\\'");
     const content = this.state.contentInput.replace(/'/gi, "\\'");
@@ -89,6 +91,8 @@ class SaveArticle extends PureComponent {
           value={this.state.contentInput}
           style={style}
         />
+        <br />
+        <input type="file" onChange={this.handleFileChange}/>
         <br />
         <RaisedButton label="post" primary={true} onClick={this.postArticle} />
       </div>
