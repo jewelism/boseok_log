@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 
 import moment from 'moment';
 import Paper from 'material-ui/Paper';
@@ -8,8 +8,8 @@ import Snackbar from 'material-ui/Snackbar';
 import socketIOClient from 'socket.io-client';
 
 import ChatToggleBtn from './ChatToggleBtn';
-import { isMobile } from '../../utils';
-import { getUserIp, getChats, saveChats } from '../../actions';
+import {isMobile} from '../../utils';
+import {getChats, saveChats} from '../../actions';
 
 const socket = socketIOClient("https://boseok.me:3443");
 
@@ -39,7 +39,7 @@ const styles = {
     display: 'flex', justifyContent: 'center', alignItems: 'center',
     fontWeight: 'bold', fontSize: isMobile() ? 35 : 19, paddingTop: 15
   },
-  infoIconStyle: isMobile() ? { width: 40, height: 40 } : { width: 25, height: 25 },
+  infoIconStyle: isMobile() ? {width: 40, height: 40} : {width: 25, height: 25},
   infoTooltip: {
     position: 'absolute', top: 50,
     fontSize: isMobile() ? 20 : 10, color: '#FFF', backgroundColor: 'black', padding: 5, zIndex: 1000
@@ -48,7 +48,7 @@ const styles = {
     height: isMobile() ? 560 : 300, paddingTop: 20, paddingLeft: 15, paddingRight: 7,
     fontSize: isMobile() ? 30 : 15, overflowY: 'scroll', overflowX: 'hidden',
   },
-  msgTextContainer: { marginBottom: 12 },
+  msgTextContainer: {marginBottom: 12},
   msgText: {
     backgroundColor: '#FFF', padding: 5, paddingRight: 10, paddingLeft: 10, marginRight: 5, borderRadius: 5
   },
@@ -63,10 +63,10 @@ const styles = {
   chatInputStyle: {
     width: '75%', height: '82%', borderRadius: 10, marginRight: '2%', paddingLeft: 5, fontSize: isMobile() ? 35 : 16
   },
-  sendBtnStyle: { width: '15%', height: '100%', borderRadius: 10 },
-  sendBtnDisabledStyle: { width: '15%', height: '100%', borderRadius: 10, backgroundColor: 'red' },
-  myMsgStyle: { color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5 },
-  anonymousMsgStyle: { display: 'flex', justifyContent: 'flex-start', marginBottom: 5 }
+  sendBtnStyle: {width: '15%', height: '100%', borderRadius: 10},
+  sendBtnDisabledStyle: {width: '15%', height: '100%', borderRadius: 10, backgroundColor: 'red'},
+  myMsgStyle: {color: '#4158FF', display: 'flex', justifyContent: 'flex-end', marginBottom: 5},
+  anonymousMsgStyle: {display: 'flex', justifyContent: 'flex-start', marginBottom: 5}
 };
 
 const UserInfo = navigator.userAgent; //Determine whether you sent me a chat or someone else
@@ -94,22 +94,13 @@ class Chat extends PureComponent {
   componentDidMount() {
     this.scrollToBottom();
     getChats() //get chatting logs in DB
-      .then(dbMsgList => this.setState({ dbMsgList }));
-
-    getUserIp() //user ip => user chat text color
-      .then((data) => {
-        if (data.ip && data.ip.substr) {
-          const ipArr = data.ip.split(".");
-          const userTextColor = `#2${Math.abs(parseInt(ipArr[0], 10) + parseInt(ipArr[3], 10) - 1000)}27`;
-          this.setState({ userTextColor, ip: data.ip });
-        }
-      });
+      .then(dbMsgList => this.setState({dbMsgList}));
 
     socket.on('chat', (data) => {
       const message = data;
-      this.setState({ messageList: [...this.state.messageList, message] }); //append message obj
+      this.setState({messageList: [...this.state.messageList, message]}); //append message obj
       if (!this.state.chatIsOpen) {
-        this.setState({ snackbarIsOpen: true }); //new message arrived alert
+        this.setState({snackbarIsOpen: true}); //new message arrived alert
       }
     });
     this.rerenderTimerFunc();
@@ -117,6 +108,19 @@ class Chat extends PureComponent {
 
   componentWillUnmount() {
     clearTimeout(this.rerenderTimer);
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+    if (this.state.disableChatSubmit) { //if chat submit button disabled
+      if (!this.chatObserveTimer) { //if no timer
+        this.chatObserveTimer = setTimeout(() => { //set timer
+          this.chatCount = 0;
+          this.setState({disableChatSubmit: false}); //free
+          this.chatObserveTimer = null; //clear timer
+        }, 2000);
+      }
+    }
   }
 
   rerenderTimerFunc = () => {
@@ -130,46 +134,35 @@ class Chat extends PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-    if (this.state.disableChatSubmit) { //if chat submit button disabled
-      if (!this.chatObserveTimer) { //if no timer
-        this.chatObserveTimer = setTimeout(() => { //set timer
-          this.chatCount = 0;
-          this.setState({ disableChatSubmit: false }); //free
-          this.chatObserveTimer = null; //clear timer
-        }, 2000);
-      }
-    }
-  }
 
   handleChatInput = (e) => {
     if (e.target.value.length < 25) { //max 24 chars
-      this.setState({ chatInput: e.target.value });
+      this.setState({chatInput: e.target.value});
     }
   }
 
   handleSendBtn = (event) => {
-    const { chatInput: text, ip } = this.state; //const text = this.state.chatInput
+    const {chatInput: text, ip = ''} = this.state; //const text = this.state.chatInput
+
     if (text.trim()) { //remove blank and if not blank
       this.chatCount++;
       if (this.chatCount > 10) { //blocking too many chat request => during componentDidUpdate timer's second, over 5 request
-        this.setState({ disableChatSubmit: true });
+        this.setState({disableChatSubmit: true});
         event.preventDefault();
         return false;
       }
       saveChats(UserInfo, text, ip); //call save chat api
-      const msgObj = { author: UserInfo, text, ip, date: new Date() };
+      const msgObj = {author: UserInfo, text, ip, date: new Date()};
       socket.emit('chat', msgObj);  //defined socket data object
-      this.setState({ messageList: [...this.state.messageList, msgObj], chatInput: "" });
+      this.setState({messageList: [...this.state.messageList, msgObj], chatInput: ""});
       this.chatInputRef.focus();
     }
     event.preventDefault();
   }
 
-  handleSnackbarRequestClose = () => this.setState({ snackbarIsOpen: false });
+  handleSnackbarRequestClose = () => this.setState({snackbarIsOpen: false});
 
-  onClickChatToggleBtn = () => this.setState({ chatIsOpen: !this.state.chatIsOpen });
+  onClickChatToggleBtn = () => this.setState({chatIsOpen: !this.state.chatIsOpen});
 
   renderMsgList = () => { //chat message list
     return (
@@ -181,61 +174,69 @@ class Chat extends PureComponent {
   }
 
   msgListCallback = (msg, index) => { //chat message list map callback function
-    if (msg.ip === this.state.ip) {
+    if (msg.author === UserInfo) {
       return (
         <div key={index} style={styles.myMsgStyle}>
-          <MsgText msg={msg} />
+          <MsgText msg={msg}/>
         </div>
       );
     }
     return (
-      <div key={index} style={Object.assign({}, styles.anonymousMsgStyle, { color: this.state.userTextColor })}>
-        <MsgText msg={msg} />
+      <div key={index} style={Object.assign({}, styles.anonymousMsgStyle, {color: this.state.userTextColor})}>
+        <MsgText msg={msg}/>
       </div>
     );
   }
 
   stopPropagation = e => e.stopPropagation(); //Prevent events from being delivered to parents(?)
 
-  toggleChatInfo = () => this.setState({ isChatInfoOpen: !this.state.isChatInfoOpen });
+  toggleChatInfo = () => this.setState({isChatInfoOpen: !this.state.isChatInfoOpen});
 
   render() {
     return (
-      <div style={this.state.chatIsOpen ? styles.overlay : {}} onClick={this.onClickChatToggleBtn}> {/* overlay */}
+      <div style={this.state.chatIsOpen ? styles.overlay : {}}
+           onClick={this.onClickChatToggleBtn}> {/* overlay */}
         {this.state.chatIsOpen &&
-          <Paper zDepth={3} style={styles.containerStyle} onClick={this.stopPropagation}>
-            <div style={styles.titleStyle}>
-              익명 채팅 <InfoIcon onMouseOver={this.toggleChatInfo} onMouseOut={this.toggleChatInfo} style={styles.infoIconStyle} />
-              {this.state.isChatInfoOpen && //tooltip
-                <div style={styles.infoTooltip}>
-                  ip가 같다면 동일한 유저로 판단합니다 ^^;<br />
-                  추후 변경 될 수 있습니다!
-                </div>
-              }
+        <Paper zDepth={3} style={styles.containerStyle} onClick={this.stopPropagation}>
+          <div style={styles.titleStyle}>
+            익명 채팅 <InfoIcon onMouseOver={this.toggleChatInfo} onMouseOut={this.toggleChatInfo}
+                            style={styles.infoIconStyle}/>
+            {this.state.isChatInfoOpen && //tooltip
+            <div style={styles.infoTooltip}>
+              ip가 같다면 동일한 유저로 판단합니다 ^^;<br/>
+              추후 변경 될 수 있습니다!
             </div>
-            <div style={styles.messageContainerStyle} ref={(el) => { this.messagesEnd = el; }}>
-              {this.renderMsgList()}
-            </div>
-            <form onSubmit={this.handleSendBtn} style={styles.formStyle}> {/* message input form */}
-              <input
-                ref={(el) => { this.chatInputRef = el; }}
-                onChange={this.handleChatInput}
-                value={this.state.chatInput}
-                style={styles.chatInputStyle}
-                autoFocus
-              />
-              <button type="submit" style={this.state.disableChatSubmit ? styles.sendBtnDisabledStyle : styles.sendBtnStyle} disabled={this.state.disableChatSubmit}><SendIcon /></button>
-            </form>
-          </Paper>
+            }
+          </div>
+          <div style={styles.messageContainerStyle} ref={(el) => {
+            this.messagesEnd = el;
+          }}>
+            {this.renderMsgList()}
+          </div>
+          <form onSubmit={this.handleSendBtn} style={styles.formStyle}> {/* message input form */}
+            <input
+              ref={(el) => {
+                this.chatInputRef = el;
+              }}
+              onChange={this.handleChatInput}
+              value={this.state.chatInput}
+              style={styles.chatInputStyle}
+              autoFocus
+            />
+            <button type="submit"
+                    style={this.state.disableChatSubmit ? styles.sendBtnDisabledStyle : styles.sendBtnStyle}
+                    disabled={this.state.disableChatSubmit}><SendIcon/></button>
+          </form>
+        </Paper>
         }
         <Snackbar
           open={this.state.snackbarIsOpen}
           message="새로운 채팅메시지가 왔어요!"
           autoHideDuration={4000}
           onRequestClose={this.handleSnackbarRequestClose}
-          contentStyle={{ display: 'flex', justifyContent: 'center' }}
+          contentStyle={{display: 'flex', justifyContent: 'center'}}
         />
-        <ChatToggleBtn onClickChatToggleBtn={this.onClickChatToggleBtn} />
+        <ChatToggleBtn onClickChatToggleBtn={this.onClickChatToggleBtn}/>
       </div>
     );
   }

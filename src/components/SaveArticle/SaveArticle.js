@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { saveArticles, getArticleById } from '../../actions';
+import {saveArticles, getArticleById, saveFiles} from '../../actions';
 import { NAMES } from '../../constants';
 
 const containerStyle = {
@@ -57,6 +57,7 @@ class SaveArticle extends PureComponent {
       title,
       content
     };
+    saveFiles()
     saveArticles(body, this.state.articleId)
       .then(({ status, msg }) => alert(msg, status));
   }
