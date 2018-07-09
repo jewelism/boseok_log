@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import {saveArticles, getArticleById, saveFiles} from '../../actions';
-import { NAMES } from '../../constants';
+import {saveArticles, getArticleById, saveImages} from '../../actions';
+import {NAMES} from '../../constants';
 
 const containerStyle = {
   display: 'flex',
@@ -18,6 +18,7 @@ const containerStyle = {
 const style = {
   width: '100%'
 }
+
 class SaveArticle extends PureComponent {
   constructor(props) {
     super(props);
@@ -27,7 +28,7 @@ class SaveArticle extends PureComponent {
       selectedCategory: 'js',
       titleInput: '',
       contentInput: '',
-      files: null,
+      images: null,
       articleId
     };
   }
@@ -45,21 +46,28 @@ class SaveArticle extends PureComponent {
     }
   }
 
-  handleChange = (event, index, selectedCategory) => this.setState({ selectedCategory });
-  handleTitleInput = e => this.setState({ titleInput: e.target.value });
-  handleContentInput = e => this.setState({ contentInput: e.target.value });
-  handleFileChange = e => this.setState({ files: e.target.files });
-  postArticle = () => {
+  handleChange = (event, index, selectedCategory) => this.setState({selectedCategory});
+  handleTitleInput = e => this.setState({titleInput: e.target.value});
+  handleContentInput = e => this.setState({contentInput: e.target.value});
+  handleFileChange = e => this.setState({images: e.target.files});
+  postArticle = async () => {
+    let images = '';
+    if (this.state.images) {
+      const res = await saveImages(Array.from(this.state.images));
+      images = res.status && res.data.map(data => ({filename: data.filename, mimetype: data.mimetype}));
+    }
+
     const title = this.state.titleInput.replace(/'/gi, "\\'");
     const content = this.state.contentInput.replace(/'/gi, "\\'");
     const body = {
       category: this.state.selectedCategory,
       title,
-      content
+      content,
+      images: images ? JSON.stringify(images) : '',
     };
-    saveFiles()
+
     saveArticles(body, this.state.articleId)
-      .then(({ status, msg }) => alert(msg, status));
+      .then(({status, msg}) => alert(msg, status));
   }
 
   render() {
@@ -72,18 +80,18 @@ class SaveArticle extends PureComponent {
         >
           {Object.keys(NAMES).map((key, index) => {
             return (
-              <MenuItem value={key} primaryText={NAMES[key]} key={index} />
+              <MenuItem value={key} primaryText={NAMES[key]} key={index}/>
             );
           })}
         </SelectField>
-        <br />
+        <br/>
         <TextField
           hintText="Title"
           onChange={this.handleTitleInput}
           value={this.state.titleInput}
           style={style}
         />
-        <br />
+        <br/>
         <TextField
           hintText="Content"
           multiLine={true}
@@ -92,10 +100,10 @@ class SaveArticle extends PureComponent {
           value={this.state.contentInput}
           style={style}
         />
-        <br />
-        <input type="file" onChange={this.handleFileChange}/>
-        <br />
-        <RaisedButton label="post" primary={true} onClick={this.postArticle} />
+        <br/>
+        <input type="file" onChange={this.handleFileChange} multiple/>
+        <br/>
+        <RaisedButton label="post" primary={true} onClick={this.postArticle}/>
       </div>
     )
   }
