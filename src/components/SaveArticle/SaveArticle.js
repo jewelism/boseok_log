@@ -36,7 +36,8 @@ class SaveArticle extends PureComponent {
   componentDidMount() {
     if (this.state.articleId) {
       getArticleById(this.state.articleId)
-        .then((res) => {
+        .then(response => {
+          const res = response[0];
           this.setState({
             selectedCategory: res.category,
             titleInput: res.title,

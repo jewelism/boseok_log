@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 
 // import Dialog from 'material-ui/Dialog';
 import moment from 'moment';
 
-import { NAMES } from '../../constants';
+import {NAMES} from '../../constants';
 import Article from './Article';
-import { getArticlePageInfo } from './index';
+import {getArticlePageInfo} from './index';
 
 import './ArticleListPage.css';
 import './ArticleList.css';
@@ -15,7 +15,7 @@ class ArticleListPage extends PureComponent {
     super(props);
 
     this.state = {
-      article_list: [],
+      articleList: [],
       title: null,
       showArticle: false,
       selectedArticle: {},
@@ -24,21 +24,21 @@ class ArticleListPage extends PureComponent {
   }
 
   async componentDidMount() {
-    const { pathname } = this.props.location;
-    const { uri, title, article_list, showCategory } = await getArticlePageInfo(pathname);
-    this.setState({ uri, title, article_list, showCategory });
+    const {pathname} = this.props.location;
+    const {uri, title, articleList, showCategory} = await getArticlePageInfo(pathname);
+    this.setState({uri, title, articleList, showCategory});
   }
 
-  onClickItem = item => this.setState({ showArticle: true, selectedArticle: item });
+  onClickItem = item => this.setState({showArticle: true, selectedArticle: item});
 
-  closeArticle = () => this.setState({ showArticle: false });
+  closeArticle = () => this.setState({showArticle: false});
 
   render() {
     return (
       <div className="alp-container">
         <span className="alp-title">{this.state.title}</span>
         <div className="alp-table">
-          {this.state.article_list.map((article, index) => {
+          {this.state.articleList.map((article, index) => {
             return (
               <div
                 onClick={() => this.onClickItem(article)}
@@ -47,7 +47,7 @@ class ArticleListPage extends PureComponent {
                 <span>
                   <span className="article-list-table-td-id">{index + 1}.</span>
                   {this.state.showCategory &&
-                    <span>
+                  <span>
                       <span className="article-list-table-td">{NAMES[article.category]}</span>
                       <span className="article-list-table-td">-</span>
                     </span>
@@ -59,7 +59,7 @@ class ArticleListPage extends PureComponent {
             )
           })}
         </div>
-        <Article item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle} />
+        <Article item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle}/>
       </div>
     )
   }

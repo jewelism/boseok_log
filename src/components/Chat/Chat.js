@@ -94,7 +94,7 @@ class Chat extends PureComponent {
   componentDidMount() {
     this.scrollToBottom();
     getChats() //get chatting logs in DB
-      .then(dbMsgList => this.setState({dbMsgList}));
+      .then((dbMsgList = []) => this.setState({dbMsgList: dbMsgList[0]}));
 
     socket.on('chat', (data) => {
       const message = data;
@@ -151,7 +151,7 @@ class Chat extends PureComponent {
         event.preventDefault();
         return false;
       }
-      saveChats(UserInfo, text, ip); //call save chat api
+      saveChats({UserInfo, text, ip}); //call save chat api
       const msgObj = {author: UserInfo, text, ip, date: new Date()};
       socket.emit('chat', msgObj);  //defined socket data object
       this.setState({messageList: [...this.state.messageList, msgObj], chatInput: ""});

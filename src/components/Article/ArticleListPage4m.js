@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 
 import moment from 'moment';
-import { GridList, GridTile } from 'material-ui/GridList';
+import {GridList, GridTile} from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 
-import { getArticlePageInfo } from './index';
+import {getArticlePageInfo} from './index';
 import Article from './Article';
 
 import './ArticleListPage.css';
@@ -35,7 +35,7 @@ class ArticleListPage4m extends PureComponent {
     super(props)
 
     this.state = {
-      article_list: [],
+      articleList: [],
       title: null,
       showArticle: false,
       selectedArticle: {},
@@ -43,14 +43,14 @@ class ArticleListPage4m extends PureComponent {
   }
 
   async componentDidMount() {
-    const { pathname } = this.props.location;
-    const { uri, title, article_list } = await getArticlePageInfo(pathname)
-    this.setState({ uri, title, article_list });
+    const {pathname} = this.props.location;
+    const {uri, title, articleList} = await getArticlePageInfo(pathname);
+    this.setState({uri, title, articleList});
   }
 
-  onClickItem = article => this.setState({ showArticle: true, selectedArticle: article })
+  onClickItem = article => this.setState({showArticle: true, selectedArticle: article});
 
-  closeArticle = () => this.setState({ showArticle: false })
+  closeArticle = () => this.setState({showArticle: false});
 
   render() {
     // const iconSize = '80px'
@@ -61,11 +61,11 @@ class ArticleListPage4m extends PureComponent {
           cellHeight={300}
           style={styles.gridList}
         >
-          <Subheader style={{ fontSize: '40px', padding: '25px' }}>{this.state.title}</Subheader>
-          {this.state.article_list.map((article, index) => (
+          <Subheader style={{fontSize: '40px', padding: '25px'}}>{this.state.title}</Subheader>
+          {this.state.articleList.map((article, index) => (
             <GridTile    //titleWrap => paddingTop:15
               onClick={e => this.onClickItem(article)}
-              style={{ height: '295px', backgroundColor: 'gray' }}
+              style={{height: '295px', backgroundColor: 'gray'}}
               key={index}
               titlePosition='top'
               title={<b>{article.title}</b>}
@@ -73,16 +73,17 @@ class ArticleListPage4m extends PureComponent {
               titleStyle={styles.fontSize}
               subtitle={<span>{moment(article.date).fromNow()}</span>}
               subtitleStyle={styles.subtitle}
-            // actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
+              // actionIcon={<IconButton iconStyle={btnStyle} style={btnStyle}><StarBorder color="white" /></IconButton>}
             >
               {/* <img src={tile.img} /> */}
             </GridTile>
           ))}
         </GridList>
-        <Article forMobile item={this.state.selectedArticle} open={this.state.showArticle} handleClose={this.closeArticle} />
+        <Article forMobile item={this.state.selectedArticle} open={this.state.showArticle}
+                 handleClose={this.closeArticle}/>
       </div>
     )
   }
 }
 
-export default ArticleListPage4m
+export default ArticleListPage4m;
