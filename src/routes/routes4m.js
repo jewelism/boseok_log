@@ -4,6 +4,7 @@ import TechIndex from '../components/Tech';
 import AboutPage4m from '../components/About/AboutPage4m';
 import MyAppPage4m from '../components/MyApp/MyAppPage4m';
 import ArticleListPage4m from '../components/Article/ArticleListPage4m';
+import SaveArticle from '../components/SaveArticle/SaveArticle';
 
 export const routes4m = [
   {
@@ -39,5 +40,13 @@ export const routes4m = [
   {
     path: TALK_URI,
     component: ArticleListPage4m,
-  }
+  },
+  {
+    path: '/post/:id',
+    component: SaveArticle
+  },
+  {
+    path: '/post',
+    component: SaveArticle
+  },
 ]
