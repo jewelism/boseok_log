@@ -69,7 +69,7 @@ class SaveArticle extends PureComponent {
 
     saveArticles(body, this.state.articleId)
       .then(({status, msg}) => alert(msg, status));
-  }
+  };
 
   render() {
     return (
